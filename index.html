@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Prolific Study</title>
+      
+        <!-- FIREBASE -->
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-database.js"></script>
+
+      
+<script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyCROTQKiFcj7bT2XLPtIcq3Rpf-Y0w2tHc",
+        authDomain: "self-inf.firebaseapp.com",
+        databaseURL: "https://self-inf.firebaseio.com",
+        projectId: "self-inf",
+        storageBucket: "self-inf.appspot.com",
+        messagingSenderId: "580545762317",
+        appId: "1:580545762317:web:d14e1e743922242f2fb144",
+        measurementId: "G-5QDB03P0HJ"
+
+          };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);        
+        //Create reference to the database
+        var database = firebase.database();
+        //Sign in controls
+        firebase.auth().signInAnonymously().catch(function(error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+        });      
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                var isAnonymous = user.isAnonymous;
+                var uid = user.uid;
+            }
+        });
+        </script>
+      
+      
+      
+      
+        <!-- jsPSYCH -->
+        <script src="jspsych-6.1.0/jspsych.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-html-slider-response.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-image-keyboard-response.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-html-button-response.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-reconstruction.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-reconstruction_instructions.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-external-html.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-instructions.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-survey-text.js"></script>
+        <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+
+    
+    <!--margin-right: 50px;-->
+        <!-- CSS -->
+        <style type="text/css">
+            
+            #wrapper {
+              display: flex;
+                align-content: center;
+                text-align: center;
+                margin: 0px;
+            }
+            
+            .flex-container {
+              display: flex;
+                justify-content: space-between;
+                font-size: 12px;
+                margin-bottom: -10px;
+            }
+
+            #leftStim {
+              flex: 0 0 47%;
+                text-align: center;
+                align-content: center;
+                position: relative;
+                align-items:center;
+                padding: 10px;
+                 font-size: 40px;
+            }
+
+            #rightStim {
+              flex: 1;
+                text-align: center;
+                align-content: center;
+                position: relative;
+                align-items:center;
+                padding: 10px;
+                 font-size: 40px;
+            }
+            
+            #leftNumStyle {
+              flex: 0 0 50%;
+                text-align: center;
+                align-content: center;
+                position: relative;
+                align-items:center;
+                border: 3px solid #000000;
+                font-family: Arial, sans-serif;
+                font-weight: bold;
+                padding: 20px;
+                font-size: 36px;   
+            }
+
+            #rightNumStyle {
+              flex: 1;
+                text-align: center;
+                align-content: center;
+                position: relative;
+                align-items:center;
+                border: 3px solid #000000;
+                font-family: Arial, sans-serif;
+                font-weight: bold;
+                padding: 20px;
+                font-size: 36px;
+            }
+            
+            .choice-button {
+                border: none;
+                padding: 0;
+            }
+
+            .instructions {
+                margin-right: 200px;
+                margin-left: 200px;
+                text-align: justify;
+            }
+            
+            
+            .longQ {
+                margin-right: 300px;
+                margin-left: 300px;
+                text-align: justify;
+            }
+
+            #root {
+                background-color: #eee;
+            }
+            
+            p.small {
+              line-height: 1;
+            }
+
+            img {
+                width:200px;
+                height:auto;
+            }
+
+
+       
+        </style>
+    
+  </head>
+  <body></body>
+  <script>
+      
+    
+     
+/* create timeline */
+var timeline = []; 
+      
+    
+ 
+      
+      
+//Function to check whether consent has been given
+var check_consent = function(elem) {
+        if (document.getElementById('consent_checkbox').checked) {
+            return true;
+        }
+        else {
+            alert("If you wish to participate, you must check the box next to the statement 'I agree to participate in this study.'");
+            return false;
+        }
+        return false;
+    };
+
+//Presents external consent page to participants
+    var consent = {
+            type:'external-html',
+            url: "consent.html",
+            cont_btn: "start",
+            check_fn: check_consent
+        };
+        timeline.push(consent);
+      
+      
+      
+      
+      
+ //////////////////////////////////////////////////////////////////////////////////////////////
+ /////////////////////////////////////// INSTRUCTIONS ///////////////////////////////////////// 
+ ////////////////////////////////////////////////////////////////////////////////////////////// 
+
+      
+      
+      
+    /* define instructions trial */
+    var instructions = {
+      type: "instructions",
+      pages: ['<div class="instructions"><p><strong>Please read these instructions carefully</strong></p><p>In this study you will make a series of choices. In some cases, you will choose between earning <b>money for yourself</b>, or for the <b>American Red Cross</b> - a humanitarian organization that provides emergency assistance, disaster relief, and disaster preparedness education in the US.</p><p> In other cases, you will choose between earning two types of gift cards - a <b>Starbucks eGift card</b> and a <b>Home Depot eGift card</b>.</p><p>When making both types of choices, you will have to select between two dollar amounts of <b>money or gift card credit</b>.</strong></p></div>',
+              
+      '<div class="instructions"><p>You will make 52 choices between money for yourself versus the Red Cross, and 52 choices between a Starbucks or Home Depot gift card for yourself. <br><br>Crucially, for a subset of participants, one of their choices will be randomly selected and actually implemented at the end of the study. This randomly selected choice will determine the payout size and type. Since there is a good chance one of your choices could be selected, and you do not know which one might count, you should <b>treat each choice as if it were the only one that counts</b>.</p><p>If a choice to donate to the Red Cross is selected, money will be donated at the end of the study. If a choice to earn money is selected, the participant will receive this money as a bonus on Prolific. If a choice to earn gift card credit is selected, the participant will receive a Starbucks or Home Depot eGift Card via Prolific.</p><p>Your behavior in the study is confidential.</p></div>',
+              
+      '<div class = "instructions"><p>See below for an example of a choice you might encounter between earning money for yourself and earning money for the Red Cross. Remember, this is real money (e.g, the left option is worth $20). <b>You can only choose one option. You will choose by clicking on one of the two boxes.</b></p></div><p><img src="img/ss_choice_char.png"></p>',
+              
+      '<div class = "instructions"><p>Another example of a choice you might encounter - this time between earning a $20 Starbucks gift card and earning a $20 Home Depot gift card:</p></div><p><img src="img/ss_choice_gc.png"></p>'],
+    show_clickable_nav: true
+    };
+    timeline.push(instructions);   
+      
+
+// Instruction 1 
+      // We will periodically ask you to use colored bars like the ones below to make responses.
+      // If so, use the "G" and "H" keys to respond.
+      
+    var function_practice1 = function(param){
+        var size = 50 + Math.floor(param*250); /* min 50/350, max 300/350 */
+        var html = 
+        '<p style="font-family:arial;font-size: 16px">We will periodically ask you to use colored bars<br> like the ones below to make responses.</p>'+
+
+        '<p style="font-family:arial;font-size: 16px">You will use the "<b>G</b>" and "<b>H</b>" keys to respond.</p>'+
+            
+       '<p style="font-family:arial;font-size: 16px">Try using these keys to move the bars now.</p>'+
+            
+        // Bar ticks, n = 51: This code keeps the bar centered
+        '<p style="font-family:arial;font-size:100%;margin-bottom: 10px;margin-top: 0px"><span style="color: white;font-size:18px">--------</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">........<span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">...............</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">...............<span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">........</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">--------</span></p></div>'+
+            
+        '<div style="display: block; position: absolute; align: center; margin: auto; background-color:  #58A5A9; '+
+        'width: '+350+'px; height: '+30+'px;"></div></div>'+
+            '<div style="display: block; margin: auto; height: 50px;">'+
+            
+        '<div style="display: block; position: absolute; align: center; margin: auto; background-color:  #8E5485; '+
+        'width: '+size+'px; height: '+30+'px;"></div></div></div>'
+        return html;
+    }
+    
+      
+    var practice1 = {
+        type: 'reconstruction_instructions',
+        stim_function: function_practice1,
+        starting_value: .5,
+    }
+    timeline.push(practice1);
+      
+    
+// Instruction 2
+      // Use these bars to express how much you want one option versus another.
+      // Each option will have a color, and increasing the color for an option indicates how much you want that option relative to the other.
+      
+    var function_practice2 = function(param){
+        var size = 50 + Math.floor(param*250); /* min 50/350, max 300/350 */
+        var html = 
+        '<p style="font-family:arial;font-size: 16px">You will use these bars to express <b>how much <br>you want one option over the other</b>.</p>'+
+
+        '<p style="font-family:arial;font-size: 16px">Each option will have a color reflected below, and <br>increasing its color indicates that you<br> want that option more relative to the other.</p>'+
+
+        // Bar ticks, n = 51: This code keeps the bar centered
+        '<p style="font-family:arial;font-size:100%;margin-bottom: 10px;margin-top: 0px"><span style="color: white;font-size:18px">--------</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">........<span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">...............</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">...............<span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">........</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">--------</span></p></div>'+
+
+        '<div style="display: block; position: absolute; align: center; margin: auto; background-color:  #58A5A9; '+
+        'width: '+350+'px; height: '+30+'px;"></div></div>'+
+            '<div style="display: block; margin: auto; height: 50px;">'+
+            
+        '<div style="display: block; position: absolute; align: center; margin: auto; background-color:  #8E5485; '+
+        'width: '+size+'px; height: '+30+'px;"></div></div></div>'
+        return html;
+    }
+    
+      
+    var practice2 = {
+        type: 'reconstruction_instructions',
+        stim_function: function_practice2,
+        starting_value: .5,
+    }
+    timeline.push(practice2);
+      
+      
+    
+    var function_practice3 = function(param){
+        var size = 50 + Math.floor(param*250); /* min 50/350, max 300/350 */
+        var html = 
+        '<p style="font-family:arial;font-size: 16px">Here is an example where we include some<br> labels illustrating different color ratios:</p>'+   
+    
+        '<p style="font-family:arial;font-size: 16px">Imagine you are asked how much you want <br><b><font color="8E5485">Option 1</font></b> versus <b><font color="58A5A9">Option 2</font></b>?</p>'+
+
+        '<p style="font-family:arial;font-size: 16px">A response at "6:1" means you want <br><b><font color="8E5485">Option 1</font></b> <i>six times</i> more than <b><font color="58A5A9">Option 2</font></b></p>'+
+    
+         // Bar labels
+        '<p style="font-family:arial;font-size:85%;margin-bottom: 0px"><span style="color: white;">--------</span><span style="color: lightgrey;">1:6</span><span style="color: white;">.....<span style="color: lightgrey;">1:3</span><span style="color: white;">..............</span><span style="color: lightgrey;">1:1</span><span style="color: white;">..............<span style="color: lightgrey;">3:1</span><span style="color: white;">.....</span><span style="color: lightgrey;">6:1</span><span style="color: white;">--------</span></p></div>'+ 
+        // Bar ticks, n = 51 
+            // 50/300, 87.5/262.5, 175/175, 262.5/87.5, 300/50
+        '<p style="font-family:arial;font-size:100%;margin-bottom: 10px;margin-top: 0px"><span style="color: white;">--------</span><span style="color: lightgrey;">|</span><span style="color: white;">........<span style="color: lightgrey;">|</span><span style="color: white;">...............</span><span style="color: lightgrey;">|</span><span style="color: white;">...............<span style="color: lightgrey;">|</span><span style="color: white;">........</span><span style="color: lightgrey;">|</span><span style="color: white;">--------</span></p></div>'+
+                  
+        '<div style="display: block; position: absolute; align: center; margin: auto; background-color:  #58A5A9; '+
+        'width: '+350+'px; height: '+30+'px;"></div></div>'+
+        '<div style="display: block; margin: auto; height: 50px;">'+
+
+        '<div style="display: block; position: absolute; align: center; margin: auto; background-color:  #8E5485; '+
+        'width: '+size+'px; height: '+30+'px;"></div></div></div>'
+        return html;
+    }
+    
+
+      
+    var practice3 = {
+        type: 'reconstruction_instructions',
+        stim_function: function_practice3,
+        starting_value: 1,
+    }
+    timeline.push(practice3);
+      
+      
+    var function_practice4 = function(param){
+        var size = 50 + Math.floor(param*250); /* min 50/350, max 300/350 */
+        var html = 
+        '<p style="font-family:arial;font-size: 16px">A response at "1:1" means you want <br><b><font color="8E5485">Option 1</font></b> and <b><font color="58A5A9">Option 2</font></b> equally</p>'+
+
+            
+        // Bar labels
+        '<p style="font-family:arial;font-size:85%;margin-bottom: 0px"><span style="color: white;">--------</span><span style="color: lightgrey;">1:6</span><span style="color: white;">.....<span style="color: lightgrey;">1:3</span><span style="color: white;">..............</span><span style="color: lightgrey;">1:1</span><span style="color: white;">..............<span style="color: lightgrey;">3:1</span><span style="color: white;">.....</span><span style="color: lightgrey;">6:1</span><span style="color: white;">--------</span></p></div>'+ 
+        // Bar ticks, n = 51 
+            // 50/300, 87.5/262.5, 175/175, 262.5/87.5, 300/50
+        '<p style="font-family:arial;font-size:100%;margin-bottom: 10px;margin-top: 0px"><span style="color: white;">--------</span><span style="color: lightgrey;">|</span><span style="color: white;">........<span style="color: lightgrey;">|</span><span style="color: white;">...............</span><span style="color: lightgrey;">|</span><span style="color: white;">...............<span style="color: lightgrey;">|</span><span style="color: white;">........</span><span style="color: lightgrey;">|</span><span style="color: white;">--------</span></p></div>'+
+            
+            
+            
+        '<div style="display: block; position: absolute; align: center; margin: auto; background-color:  #58A5A9; '+
+        'width: '+350+'px; height: '+30+'px;"></div></div>'+
+        '<div style="display: block; margin: auto; height: 50px;">'+
+
+        '<div style="display: block; position: absolute; align: center; margin: auto; background-color:  #8E5485; '+
+        'width: '+size+'px; height: '+30+'px;"></div></div></div>'
+        return html;
+    }
+    
+
+      
+    var motInf_practice4 = {
+        type: 'reconstruction_instructions',
+        stim_function: function_practice4,
+        starting_value: .5,
+    }
+    timeline.push(motInf_practice4);
+      
+      
+    var function_practice5 = function(param){
+        var size = 50 + Math.floor(param*250); /* min 50/300, max 300/350 */
+        var html = 
+        '<p style="font-family:arial;font-size: 16px">A response at "1:6" means you want <br><b><font color="58A5A9">Option 2</font></b> six times more than <b><font color="8E5485">Option 1</font></b></p>'+
+            
+        '<p style="font-family:arial;font-size: 16px"><b>Note</b>: we will not display these ratios again,<br>so use the <i>relative</i> amount of color for each<br> option to guide your responses.</font></b></p>'+
+
+        // Bar labels
+        '<p style="font-family:arial;font-size:85%;margin-bottom: 0px"><span style="color: white;">--------</span><span style="color: lightgrey;">1:6</span><span style="color: white;">.....<span style="color: lightgrey;">1:3</span><span style="color: white;">..............</span><span style="color: lightgrey;">1:1</span><span style="color: white;">..............<span style="color: lightgrey;">3:1</span><span style="color: white;">.....</span><span style="color: lightgrey;">6:1</span><span style="color: white;">--------</span></p></div>'+ 
+        // Bar ticks, n = 51 
+            // 50/300, 87.5/262.5, 175/175, 262.5/87.5, 300/50
+        '<p style="font-family:arial;font-size:100%;margin-bottom: 10px;margin-top: 0px"><span style="color: white;">--------</span><span style="color: lightgrey;">|</span><span style="color: white;">........<span style="color: lightgrey;">|</span><span style="color: white;">...............</span><span style="color: lightgrey;">|</span><span style="color: white;">...............<span style="color: lightgrey;">|</span><span style="color: white;">........</span><span style="color: lightgrey;">|</span><span style="color: white;">--------</span></p></div>'+
+            
+            
+            
+        '<div style="display: block; position: absolute; align: center; margin: auto; background-color:  #58A5A9; '+
+        'width: '+350+'px; height: '+30+'px;"></div></div>'+
+        '<div style="display: block; margin: auto; height: 50px;">'+
+
+        '<div style="display: block; position: absolute; align: center; margin: auto; background-color:  #8E5485; '+
+        'width: '+size+'px; height: '+30+'px;"></div></div></div>'
+        return html;
+    }
+    
+
+      
+    var motInf_practice5 = {
+        type: 'reconstruction_instructions',
+        stim_function: function_practice5,
+        starting_value: 0,
+    }
+    timeline.push(motInf_practice5);
+      
+      
+      
+      
+      
+      
+ //////////////////////////////////////////////////////////////////////////////////////////////
+ //////////////////////////////////////////// TASK //////////////////////////////////////////// 
+ //////////////////////////////////////////////////////////////////////////////////////////////      
+    
+       
+    // create random start points for motive scale
+        var randStart_pro_char = Math.floor(Math.random()*10);
+        var randStart_active_char = Math.floor(Math.random()*10);
+        var randStart_retro_char = Math.floor(Math.random()*10);
+        var randStart_pro_gc = Math.floor(Math.random()*10);
+        var randStart_active_gc = Math.floor(Math.random()*10);
+        var randStart_retro_gc = Math.floor(Math.random()*10);
+      
+        randStart_pro_char = randStart_pro_char *.1; /*/ for 7 pt scale /*/
+        randStart_active_char = randStart_active_char *.1; /*/ for 7 pt scale /*/
+        randStart_retro_char = randStart_retro_char *.1; /*/ for 7 pt scale /*/
+        randStart_pro_gc = randStart_pro_gc *.1; /*/ for 7 pt scale /*/
+        randStart_active_gc = randStart_active_gc *.1; /*/ for 7 pt scale /*/
+        randStart_retro_gc = randStart_retro_gc *.1; /*/ for 7 pt scale /*/
+
+   
+    
+      
+    var loop_youColor = jsPsych.randomization.sampleWithoutReplacement(["blue","beige"], 1)[0];
+    if(loop_youColor == 'blue') {
+        var youColor = '#6A9ACF' // blue
+        var youColor_pic = 'you_blue.png'
+        var youColor_colorName = 'blue'
+    } else {
+        var youColor = '#A9957B' // beige D4C29C 
+        var youColor_pic = 'you_beige.png'
+        var youColor_colorName = 'beige'
+    };
+      
+      
+    var loop_position = jsPsych.randomization.sampleWithoutReplacement(["left_self","right_self"], 1)[0];
+    if(loop_position == 'left_self') {
+        var leftNum = 0
+        
+            var left_char = 'yourself'
+            var left_char_Color = youColor
+            var left_char_Stim = youColor_pic
+            var left_char_ColorName = youColor_colorName
+
+            var left_gc = 'Home Depot'
+            var left_gc_Color = "#E66D2D"
+            var left_gc_Stim = 'gc_homedepot.png'
+            var left_gc_ColorName = 'orange'
+        
+        var rightNum = 1 
+        
+            var right_char = 'the Red Cross'
+            var right_char_Color = '#D54848' // red alt: CA0301
+            var right_char_Stim = 'char.png'
+            var right_char_ColorName = 'red'
+
+            var right_gc = 'Starbucks'
+            var right_gc_Color = '#047655' // green
+            var right_gc_Stim = 'gc_starbucks.png'
+            var right_gc_ColorName = 'green'
+
+        
+    } else {
+        var leftNum = 1
+        
+            var left_char = 'the Red Cross'
+            var left_char_Color = '#D54848' // red alt: CA0301
+            var left_char_Stim = 'char.png'
+            var left_char_ColorName = 'red'
+
+            var left_gc = 'Starbucks'
+            var left_gc_Color = '#047655' // green
+            var left_gc_Stim = 'gc_starbucks.png'
+            var left_gc_ColorName = 'green'
+            
+        var rightNum = 0
+        
+            var right_char = 'yourself'
+            var right_char_Color = youColor
+            var right_char_Stim = youColor_pic
+            var right_char_ColorName = youColor_colorName
+
+            var right_gc = 'Home Depot'
+            var right_gc_Color = "#E66D2D"
+            var right_gc_Stim = 'gc_homedepot.png'
+            var right_gc_ColorName = 'orange'
+    };
+      
+      
+// CHARITY MOTIVE Q (PROSPECTIVE / ACTIVE)
+      
+      
+    var function_char = function(param){
+        var size = 50 + Math.floor(param*250); /* min 50/350, max 300/350 */
+        var html = 
+           '<p style="font-family:arial;">How much do you want to earn money for <br><b><font color="'+left_char_Color+'">'+left_char+'</font></b> vs. money for <b><font color="'+right_char_Color+'">'+right_char+'</font></b>?</p>'+
+            
+            '<p class = "small" style="font-family:arial;margin-top: 25px;margin-bottom:5px"><font size="2"></p>'+
+            
+           '<div class="flex-container"><div><p class = "small" style="font-family:arial;"><br>more <b><font color="'+right_char_Color+'">'+right_char_ColorName+'</font></b> = want to <br>earn money for <br>'+right_char+' more<br><br><font size="+1">←</font> "G"</p></div>'+'<div><p class = "small" style="font-family:arial;"><br>more <b><font color="'+left_char_Color+'">'+left_char_ColorName+'</font></b> = want to <br>earn money for <br>'+left_char+' more<br><br>"H" <font size="+1">→</font></p></div></div>'+ 
+            
+                // Bar ticks, n = 51
+        '<p style="font-family:arial;font-size:100%;margin-bottom: 10px;margin-top: 0px"><span style="color: white;font-size:18px">--------</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">........<span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">...............</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">...............<span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">........</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">--------</span></p></div>'+
+            
+
+        '<div style="display: block; position: absolute; align: center; margin: auto; background-color:  '+right_char_Color+'; '+
+        'width: '+350+'px; height: '+30+'px;"></div></div>'+
+            '<div style="display: block; margin: auto; height: 50px;">'+
+            
+        '<div style="display: block; position: absolute; align: center; margin: auto; background-color:  '+left_char_Color+'; '+
+        'width: '+size+'px; height: '+30+'px;"></div></div></div>'
+        return html;
+    }
+    
+    
+// GIFTCARD MOTIVE Q (PROSPECTIVE / ACTIVE)
+    
+    
+    var function_gc = function(param){
+        var size = 50 + Math.floor(param*250); /* min 50/350, max 300/350 */
+        var html = 
+           '<p style="font-family:arial;">How much do you want to earn yourself a<br><b><font color="'+left_gc_Color+'">'+left_gc+'</font></b> vs. <b><font color="'+right_gc_Color+'">'+right_gc+'</font></b> gift card?</p>'+
+            
+            '<p class = "small" style="font-family:arial;margin-top: 25px;margin-bottom:5px"><font size="2"></p>'+
+
+           '<div class="flex-container"><div><p class = "small" style="font-family:arial;"><br>more <b><font color="'+right_gc_Color+'">'+right_gc_ColorName+'</font></b> = want to earn <br>a '+right_gc+' gift card more<br><br><font size="+1">←</font> "G"</p></div>'+'<div><p class = "small" style="font-family:arial;"><br>more <b><font color="'+left_gc_Color+'">'+left_gc_ColorName+'</font></b> = want to earn <br>a '+left_gc+' gift card more<br><br>"H" <font size="+1">→</font></p></div></div>'+ 
+            
+                // Bar ticks, n = 51
+        '<p style="font-family:arial;font-size:100%;margin-bottom: 10px;margin-top: 0px"><span style="color: white;font-size:18px">--------</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">........<span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">...............</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">...............<span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">........</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">--------</span></p></div>'+
+            
+
+        '<div style="display: block; position: absolute; align: center; margin: auto; background-color:  '+right_gc_Color+'; '+
+        'width: '+350+'px; height: '+30+'px;"></div></div>'+
+            '<div style="display: block; margin: auto; height: 50px;">'+
+            
+        '<div style="display: block; position: absolute; align: center; margin: auto; background-color:  '+left_gc_Color+'; '+
+        'width: '+size+'px; height: '+30+'px;"></div></div></div>'
+        return html;
+    }
+ 
+// CHARITY MOTIVE Q (RETROSPECTIVE) # changes "do" to "did"
+      
+      
+    var function_char_retro = function(param){
+        var size = 50 + Math.floor(param*250); /* min 50/350, max 300/350 */
+        var html = 
+           '<p style="font-family:arial;">How much did you want to earn money for <br><b><font color="'+left_char_Color+'">'+left_char+'</font></b> vs. money for <b><font color="'+right_char_Color+'">'+right_char+'</font></b>?</p>'+
+            
+            '<p class = "small" style="font-family:arial;margin-top: 25px;margin-bottom:5px"><font size="2"></p>'+
+            
+           '<div class="flex-container"><div><p class = "small" style="font-family:arial;"><br>more <b><font color="'+right_char_Color+'">'+right_char_ColorName+'</font></b> = wanted<br> to earn money for <br>'+right_char+' more<br><br><font size="+1">←</font> "G"</p></div>'+'<div><p class = "small" style="font-family:arial;"><br>more <b><font color="'+left_char_Color+'">'+left_char_ColorName+'</font></b> = wanted<br> to earn money for <br>'+left_char+' more<br><br>"H" <font size="+1">→</font></p></div></div>'+ 
+            
+                // Bar ticks, n = 51
+        '<p style="font-family:arial;font-size:100%;margin-bottom: 10px;margin-top: 0px"><span style="color: white;font-size:18px">--------</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">........<span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">...............</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">...............<span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">........</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">--------</span></p></div>'+
+            
+
+        '<div style="display: block; position: absolute; align: center; margin: auto; background-color:  '+right_char_Color+'; '+
+        'width: '+350+'px; height: '+30+'px;"></div></div>'+
+            '<div style="display: block; margin: auto; height: 50px;">'+
+            
+        '<div style="display: block; position: absolute; align: center; margin: auto; background-color:  '+left_char_Color+'; '+
+        'width: '+size+'px; height: '+30+'px;"></div></div></div>'
+        return html;
+    }
+  
+    
+// GIFTCARD MOTIVE Q (RETROSPECTIVE) # changes "do" to "did"
+      
+  
+    var function_gc_retro = function(param){
+        var size = 50 + Math.floor(param*250); /* min 50/350, max 300/350 */
+        var html = 
+           '<p style="font-family:arial;">How much did you want to earn yourself a<br><b><font color="'+left_gc_Color+'">'+left_gc+'</font></b> vs. <b><font color="'+right_gc_Color+'">'+right_gc+'</font></b> gift card?</p>'+
+            
+            '<p class = "small" style="font-family:arial;margin-top: 25px;margin-bottom:5px"><font size="2"></p>'+
+
+           '<div class="flex-container"><div><p class = "small" style="font-family:arial;"><br>more <b><font color="'+right_gc_Color+'">'+right_gc_ColorName+'</font></b> = wanted to <br>earn a '+right_gc+' <br>gift card more<br><br><font size="+1">←</font> "G"</p></div>'+'<div><p class = "small" style="font-family:arial;"><br>more <b><font color="'+left_gc_Color+'">'+left_gc_ColorName+'</font></b> = wanted to <br>earn a '+left_gc+' <br>gift card more<br><br>"H" <font size="+1">→</font></p></div></div>'+ 
+            
+                // Bar ticks, n = 51
+        '<p style="font-family:arial;font-size:100%;margin-bottom: 10px;margin-top: 0px"><span style="color: white;font-size:18px">--------</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">........<span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">...............</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">...............<span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">........</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">--------</span></p></div>'+
+            
+
+        '<div style="display: block; position: absolute; align: center; margin: auto; background-color:  '+right_gc_Color+'; '+
+        'width: '+350+'px; height: '+30+'px;"></div></div>'+
+            '<div style="display: block; margin: auto; height: 50px;">'+
+            
+        '<div style="display: block; position: absolute; align: center; margin: auto; background-color:  '+left_gc_Color+'; '+
+        'width: '+size+'px; height: '+30+'px;"></div></div></div>'
+        return html;
+    }
+ 
+    
+    var think_pro = {
+      type: "instructions",
+      pages: ['<p>Press next to begin the study.</p>'],
+    show_clickable_nav: true
+    };
+    timeline.push(think_pro);  
+      
+      
+      
+      
+    
+// BETWEEN SUBJECTS QUESTION (PROSPECTION)
+var pros_q = jsPsych.randomization.sampleWithoutReplacement(["pro","no"], 1)[0];   
+if(pros_q ==  "pro"){
+    
+    var think_pro2 = {
+      type: "instructions",
+      pages: ['<p>Think about the different options you can pursue in this study.</p>'],
+    show_clickable_nav: true
+    };
+    timeline.push(think_pro2); 
+    
+    var motInf_pro_char = {
+        type: 'reconstruction',
+        stim_function: function_char,
+        starting_value: randStart_pro_char,
+        on_finish: function(data){
+            data.pros_q = 'True'
+        }
+    };
+    timeline.push(motInf_pro_char); 
+    
+    var motInf_pro_char_conf = {
+        type: 'html-slider-response',
+        min: 1,
+        max: 7,
+        start: 4,
+        step: 1,
+        stimulus: "<p>How <b>confident</b> are you that you <br>accurately reported what you want? <br> <div class='flex-container'><div>Not at all</div><div>Extremely</div></div>",
+        labels: [1,2,3,4,5,6,7],
+    };
+    timeline.push(motInf_pro_char_conf);
+    
+    var motInf_pro_gc = {
+        type: 'reconstruction',
+        stim_function: function_gc,
+        starting_value: randStart_pro_gc
+    };
+    timeline.push(motInf_pro_gc);  
+      
+
+    var motInf_pro_gc_conf = {
+        type: 'html-slider-response',
+        min: 1,
+        max: 7,
+        start: 4,
+        step: 1,
+        stimulus: "<p>How <b>confident</b> are you that you <br>accurately reported what you want? <br> <div class='flex-container'><div>Not at all</div><div>Extremely</div></div>",
+        labels: [1,2,3,4,5,6,7],
+    };
+    timeline.push(motInf_pro_gc_conf);
+};
+      
+      
+ 
+    
+      
+      
+      
+      
+            
+////////////////////////
+//////////Task//////////
+//////////////////////// 
+      
+    
+      
+      
+      
+      
+      
+      
+      
+//    var degrade_distS = [[22.0, 23.0, 120.0, 24.0, 71.4, 20.0, 105.8, 21.0, 140.0, 25.0, 25.2, 21.0, 120.0, 21.0, 39.6, 22.0, 61.6, 21.0, 133.4, 22.0, 100.0, 22.0, 59.8, 20.0, 20.0, 129.6, 21.0, 38.4, 20.0, 60.0, 23.0, 75.6, 24.0, 44.0, 25.0, 35.0, 25.0, 105.6, 20.0, 67.2, 24.0, 57.6, 22.0, 48.4, 20.0, 130.0, 76.0, 88.0, 24.0, 88.2, 23.0],[22.0, 92.0, 20.0, 139.2, 21.0, 92.0, 23.0, 33.6, 25.0, 140.0, 21.0, 25.2, 25.0, 50.4, 22.0, 30.8, 22.0, 109.2, 23.0, 66.0, 20.0, 70.4, 23.0, 120.0, 36.0, 24.0, 79.8, 24.0, 100.0, 20.0, 110.4, 21.0, 100.8, 22.0, 90.0, 25.0, 70.0, 24.0, 52.0, 21.0, 52.8, 24.0, 96.8, 22.0, 40.0, 25.0, 20.0, 22.0, 129.6, 21.0, 78.2]];
+      
+    var degrade_distS = [[20.00, 9.00, 36.00, 6.62, 32.45, 7.14, 32.86, 18.46, 41.58, 7.58, 21.82, 19.09, 36.41, 12.06, 27.00, 19.58, 32.42, 6.61, 40.09, 11.50, 38.33, 10.24, 35.39, 6.29, 15.00, 40.50, 8.33, 24.62, 7.50, 30.75, 7.24, 38.35, 8.85, 30.67, 10.22, 26.25, 12.89, 32.59, 11.11, 32.00, 13.44, 33.18, 8.52, 29.56, 15.00, 36.90, 39.58, 34.40, 7.34, 37.15, 11.36],[20.00, 36.00, 6.00, 38.38, 9.55, 32.86, 7.14, 29.54, 7.42, 42.42, 18.18, 22.91, 7.59, 28.94, 15.00, 27.42, 11.58, 34.39, 6.91, 34.50, 7.67, 32.76, 13.61, 37.71, 27.00, 7.50, 31.67, 15.38, 37.50, 10.25, 34.76, 10.65, 37.15, 15.33, 36.78, 18.75, 36.11, 7.41, 28.89, 10.00, 29.56, 13.82, 37.48, 13.44, 30.00, 7.10, 10.42, 8.60, 39.66, 8.85, 38.64]];
+      
+//    var degrade_distP = [[22.0, 23.0, 120.0, 24.0, 71.4, 20.0, 105.8, 21.0, 140.0, 25.0, 25.2, 21.0, 120.0, 21.0, 39.6, 22.0, 61.6, 21.0, 133.4, 22.0, 100.0, 22.0, 59.8, 20.0, 20.0, 129.6, 21.0, 38.4, 20.0, 60.0, 23.0, 75.6, 24.0, 44.0, 25.0, 35.0, 25.0, 105.6, 20.0, 67.2, 24.0, 57.6, 22.0, 48.4, 20.0, 130.0, 76.0, 88.0, 24.0, 88.2, 23.0],[22.0, 92.0, 20.0, 139.2, 21.0, 92.0, 23.0, 33.6, 25.0, 140.0, 21.0, 25.2, 25.0, 50.4, 22.0, 30.8, 22.0, 109.2, 23.0, 66.0, 20.0, 70.4, 23.0, 120.0, 36.0, 24.0, 79.8, 24.0, 100.0, 20.0, 110.4, 21.0, 100.8, 22.0, 90.0, 25.0, 70.0, 24.0, 52.0, 21.0, 52.8, 24.0, 96.8, 22.0, 40.0, 25.0, 20.0, 22.0, 129.6, 21.0, 78.2]];
+      
+    var degrade_distP = [[20.00, 9.00, 36.00, 6.62, 32.45, 7.14, 32.86, 18.46, 41.58, 7.58, 21.82, 19.09, 36.41, 12.06, 27.00, 19.58, 32.42, 6.61, 40.09, 11.50, 38.33, 10.24, 35.39, 6.29, 15.00, 40.50, 8.33, 24.62, 7.50, 30.75, 7.24, 38.35, 8.85, 30.67, 10.22, 26.25, 12.89, 32.59, 11.11, 32.00, 13.44, 33.18, 8.52, 29.56, 15.00, 36.90, 39.58, 34.40, 7.34, 37.15, 11.36],[20.00, 36.00, 6.00, 38.38, 9.55, 32.86, 7.14, 29.54, 7.42, 42.42, 18.18, 22.91, 7.59, 28.94, 15.00, 27.42, 11.58, 34.39, 6.91, 34.50, 7.67, 32.76, 13.61, 37.71, 27.00, 7.50, 31.67, 15.38, 37.50, 10.25, 34.76, 10.65, 37.15, 15.33, 36.78, 18.75, 36.11, 7.41, 28.89, 10.00, 29.56, 13.82, 37.48, 13.44, 30.00, 7.10, 10.42, 8.60, 39.66, 8.85, 38.64]];
+      
+    var loop_order = jsPsych.randomization.sampleWithoutReplacement(["char","gc"], 1)[0];
+    if(loop_order == 'char') {
+        var first = degrade_distS
+        var second = degrade_distP
+    } else {
+        var first = degrade_distP
+        var second = degrade_distS
+    };
+
+      
+      
+// NEED TO SAVE CONTENTS OF ALL LOOPS
+      
+     
+    var degrade_n = 51; // MAKE THIS SHORTER FOR LAB PRES
+    var j;
+      
+      
+
+  var catchIndex = jsPsych.randomization.sampleWithoutReplacement([30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45], 1)[0];
+         
+      
+      
+//START BLOCKS WITH FIXATION
+      
+    var startTask = {
+      type: "instructions",
+      pages: ['<p>Continue to the next screen when you are ready to begin the first set of choices.</p>'],
+    show_clickable_nav: true,
+    on_finish: function(data) {
+        data.loop_order = loop_order,
+        data.loop_youColor = loop_youColor,
+        data.loop_position = loop_position}
+    };
+    timeline.push(startTask);   
+      
+   var fixation = {
+    type: 'html-keyboard-response',
+    stimulus: "<p style='font-size: 50px'> + </p>",
+    choices: [27],
+    trial_duration: 750
+    };
+    timeline.push(fixation);  
+    
+      
+      
+      
+// BEGINNING OF CHOICE LOOP    
+      
+      
+  
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    if(loop_order == 'char') {
+        
+        
+   
+//CHAR FIRST
+        for (j = 0; j < degrade_n; j++) {
+            if(j < 26) {
+                var char_half1 = {
+                    type: 'html-button-response',
+                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_char_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_char_Stim+'"></div></div>'],
+                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(first[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(first[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+                    margin_horizontal: '100px',
+                    button_html: '<button class="choice-button">%choice%</button>',
+                };
+                timeline.push(char_half1);
+                timeline.push(fixation);
+            };
+
+
+              if(j == 26) {
+                /* define instructions trial */
+                var motInf_active_char = {
+                    type: 'reconstruction',
+                    stim_function: function_char,
+                    starting_value: randStart_active_char
+                };
+                timeline.push(motInf_active_char);};
+
+              if(j == 26) {
+                var motInf_active_char_conf = {
+                    type: 'html-slider-response',
+                    min: 1,
+                    max: 7,
+                    start: 4,
+                    step: 1,
+                    stimulus: "<p>How <b>confident</b> are you that you <br>accurately reported what you want? <br> <div class='flex-container'><div>Not at all</div><div>Extremely</div></div>",
+                    labels: [1,2,3,4,5,6,7],
+                };
+                  timeline.push(motInf_active_char_conf);}; 
+            
+            if(j == catchIndex) {
+                var catchTrial = {
+                    type: 'html-button-response',
+                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+youColor_pic+'"></div>'+'<div id="rightStim"><img src="img/'+youColor_pic+'"></div></div>'],
+                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ "50.00" + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+ "0.00" + '</div></div>'],
+                    margin_horizontal: '100px',
+                    button_html: '<button class="choice-button">%choice%</button>',
+                    on_finish: function(data) {
+                        data.catchIndex = catchIndex}
+                    };
+                    timeline.push(catchTrial);
+                    timeline.push(fixation);
+                };
+
+
+
+              if(j >= 26) {
+                var char_half2 = {
+                    type: 'html-button-response',
+                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_char_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_char_Stim+'"></div></div>'],
+                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(second[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(second[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+                    margin_horizontal: '100px',
+                    button_html: '<button class="choice-button">%choice%</button>',
+                };
+                timeline.push(char_half2);
+                timeline.push(fixation);
+            };};
+        
+            /* define instructions trial */
+            var nextTask = {
+              type: "instructions",
+              pages: ['<p>You have completed the first set of choices. Half way there! Press continue to proceed to the new set of choices when ready.</p>'],
+            show_clickable_nav: true
+            };
+                timeline.push(nextTask);   
+        
+        
+//GC SECOND
+        for (j = 0; j < degrade_n; j++) {
+
+            if(j < 26) {
+                var gc_half1 = {
+                    type: 'html-button-response',
+                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_gc_Stim+'"></div></div>'],
+                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(first[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(first[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+                    margin_horizontal: '100px',
+                    button_html: '<button class="choice-button">%choice%</button>',
+                };
+                timeline.push(gc_half1);
+                timeline.push(fixation);};
+
+
+              if(j == 26) {
+                /* define instructions trial */
+                var motInf_active_gc = {
+                    type: 'reconstruction',
+                    stim_function: function_gc,
+                    starting_value: randStart_active_gc
+                }
+                timeline.push(motInf_active_gc);};
+            
+              if(j == 26) {
+                var motInf_active_gc_conf = {
+                    type: 'html-slider-response',
+                    min: 1,
+                    max: 7,
+                    start: 4,
+                    step: 1,
+                    stimulus: "<p>How <b>confident</b> are you that you <br>accurately reported what you want? <br> <div class='flex-container'><div>Not at all</div><div>Extremely</div></div>",
+                    labels: [1,2,3,4,5,6,7],
+                };
+                  timeline.push(motInf_active_gc_conf);}; 
+            
+                  
+            if(j == catchIndex) {
+                var catchTrial = {
+                    type: 'html-button-response',
+                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+left_gc_Stim+'"></div></div>'],
+                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ "50.00" + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+ "0.00" + '</div></div>'],
+                    margin_horizontal: '100px',
+                    button_html: '<button class="choice-button">%choice%</button>',
+                    on_finish: function(data) {
+                        data.catchIndex = catchIndex}
+                    };
+                    timeline.push(catchTrial);
+                    timeline.push(fixation);
+                };
+
+              if(j >= 26) {
+                var gc_half2 = {
+                    type: 'html-button-response',
+                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_gc_Stim+'"></div></div>'],
+                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(second[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(second[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+                    margin_horizontal: '100px',
+                    button_html: '<button class="choice-button">%choice%</button>',
+                };
+                timeline.push(gc_half2);
+                timeline.push(fixation);
+            };}
+
+        
+    } else {
+            
+//GC FIRST
+        for (j = 0; j < degrade_n; j++) {
+            if(j < 26) {
+                var gc_half1 = {
+                    type: 'html-button-response',
+                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_gc_Stim+'"></div></div>'],
+                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(first[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(first[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+                    margin_horizontal: '100px',
+                    button_html: '<button class="choice-button">%choice%</button>',
+                };
+                timeline.push(gc_half1);
+                timeline.push(fixation);
+            };
+
+
+              if(j == 26) {
+                /* define instructions trial */
+                var motInf_active_gc = {
+                    type: 'reconstruction',
+                    stim_function: function_gc,
+                    starting_value: randStart_active_gc
+                }
+                timeline.push(motInf_active_gc);};
+            
+              if(j == 26) {
+                var motInf_active_gc_conf = {
+                    type: 'html-slider-response',
+                    min: 1,
+                    max: 7,
+                    start: 4,
+                    step: 1,
+                    stimulus: "<p>How <b>confident</b> are you that you <br>accurately reported what you want? <br> <div class='flex-container'><div>Not at all</div><div>Extremely</div></div>",
+                    labels: [1,2,3,4,5,6,7],
+                };
+                  timeline.push(motInf_active_gc_conf);}; 
+            
+            if(j == catchIndex) {
+                var catchTrial = {
+                    type: 'html-button-response',
+                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+youColor_pic+'"></div>'+'<div id="rightStim"><img src="img/'+youColor_pic+'"></div></div>'],
+                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ "50.00" + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+ "0.00" + '</div></div>'],
+                    margin_horizontal: '100px',
+                    button_html: '<button class="choice-button">%choice%</button>',
+                    on_finish: function(data) {
+                        data.catchIndex = catchIndex}
+                    };
+                    timeline.push(catchTrial);
+                    timeline.push(fixation);
+                };
+
+              if(j >= 26) {
+                var gc_half2 = {
+                    type: 'html-button-response',
+                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_gc_Stim+'"></div></div>'],
+                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(second[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(second[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+                    margin_horizontal: '100px',
+                    button_html: '<button class="choice-button">%choice%</button>',
+                };
+                timeline.push(gc_half2);
+                timeline.push(fixation);
+            };};
+        
+            
+            /* define instructions trial */
+            var nextTask = {
+              type: "instructions",
+              pages: ['<div class="instructions"><p>You have completed the first set of choices. Half way there! <br> Press continue to proceed to the new set of choices when you are ready.</p>'],
+            show_clickable_nav: true
+            };
+                timeline.push(nextTask);   
+            
+//CHAR SECOND 
+        for (j = 0; j < degrade_n; j++) {
+
+                if(j < 26) {
+                    var char_half1 = {
+                        type: 'html-button-response',
+                        stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_char_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_char_Stim+'"></div></div>'],
+                        choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(first[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(first[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+                        margin_horizontal: '100px',
+                        button_html: '<button class="choice-button">%choice%</button>',
+                    };
+                    timeline.push(char_half1);
+                    timeline.push(fixation);
+                };
+
+                  if(j == 26) {
+                    /* define instructions trial */
+                    var motInf_active_char = {
+                        type: 'reconstruction',
+                        stim_function: function_char,
+                        starting_value: randStart_active_char
+                    }
+                    timeline.push(motInf_active_char);};
+            
+                  if(j == 26) {
+                    var motInf_active_char_conf = {
+                        type: 'html-slider-response',
+                        min: 1,
+                        max: 7,
+                        start: 4,
+                        step: 1,
+                        stimulus: "<p>How <b>confident</b> are you that you <br>accurately reported what you want? <br> <div class='flex-container'><div>Not at all</div><div>Extremely</div></div>",
+                        labels: [1,2,3,4,5,6,7],
+                    };
+                      timeline.push(motInf_active_char_conf);}; 
+            
+            if(j == catchIndex) {
+                var catchTrial = {
+                    type: 'html-button-response',
+                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+left_gc_Stim+'"></div></div>'],
+                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ "50.00" + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+ "0.00" + '</div></div>'],
+                    margin_horizontal: '100px',
+                    button_html: '<button class="choice-button">%choice%</button>',
+                    on_finish: function(data) {
+                        data.catchIndex = catchIndex}
+                    };
+                    timeline.push(catchTrial);
+                    timeline.push(fixation);
+                };
+
+                  if(j >= 26) {
+                    var char_half2 = {
+                        type: 'html-button-response',
+                        stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_char_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_char_Stim+'"></div></div>'],
+                        choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(second[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(second[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+                        margin_horizontal: '100px',
+                        button_html: '<button class="choice-button">%choice%</button>',
+                    };
+                    timeline.push(char_half2);
+                    timeline.push(fixation);
+                };};      
+        };
+         
+
+      
+  
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+ // END OF CHOICE LOOP       
+      
+      
+      
+
+    var fin = {
+      type: "instructions",
+      pages: ['<p>You have now completed the main section of the study. <br>We will now ask you a few more questions.</p>'],
+    show_clickable_nav: true
+    };
+    timeline.push(fin);  
+      
+
+    var think_retro = {
+      type: "instructions",
+      pages: ['<p>Consider what you wanted throughout the choice task.</p>'],
+    show_clickable_nav: true
+    };
+    timeline.push(think_retro);  
+      
+      
+    var motInf_retro_char = {
+        type: 'reconstruction',
+        stim_function: function_char_retro,
+        starting_value: randStart_retro_char
+    }
+    timeline.push(motInf_retro_char); 
+      
+    
+    var motInf_pro_retro_conf = {
+        type: 'html-slider-response',
+        min: 1,
+        max: 7,
+        start: 4,
+        step: 1,
+        stimulus: "<p>How <b>confident</b> are you that you <br>accurately reported what you wanted? <br> <div class='flex-container'><div>Not at all</div><div>Extremely</div></div>",
+        labels: [1,2,3,4,5,6,7],
+    };
+      timeline.push(motInf_pro_retro_conf);  
+      
+      
+    var motInf_retro_gc = {
+        type: 'reconstruction',
+        stim_function: function_gc_retro,
+        starting_value: randStart_retro_gc
+    }
+    timeline.push(motInf_retro_gc);  
+      
+
+    var motInf_retro_gc_conf = {
+        type: 'html-slider-response',
+        min: 1,
+        max: 7,
+        start: 4,
+        step: 1,
+        stimulus: "<p>How <b>confident</b> are you that you <br>accurately reported what you wanted? <br> <div class='flex-container'><div>Not at all</div><div>Extremely</div></div>",
+        labels: [1,2,3,4,5,6,7],
+    };
+      timeline.push(motInf_retro_gc_conf);     
+      
+      
+
+    var additionalQs = {
+      type: "instructions",
+      pages: ['<p>We will now ask some new questions about<br>your thoughts and feelings about the study.</p>'],
+    show_clickable_nav: true
+    };
+    timeline.push(additionalQs);  
+      
+      
+      
+// ADDITIONAL QUESTIONS
+      
+          // CHARITY FAIR
+      
+        var function_char_fairQ = function(param){
+        var size = 50 + Math.floor(param*250); /* min 50/350, max 300/350 */
+        var html = 
+           '<p style="font-family:arial;">At minimum, how much is a <b>fair amount</b><br> to want to earn money for <b><font color="'+left_char_Color+'">'+left_char+'</font></b><br> vs. <b><font color="'+right_char_Color+'">'+right_char+'</font></b> in this study?</p>'+
+            
+            '<p class = "small" style="font-family:arial;margin-top: 25px;margin-bottom:5px"><font size="2"></p>'+
+            
+           '<div class="flex-container"><div><p class = "small" style="font-family:arial;"><br>more <b><font color="'+right_char_Color+'">'+right_char_ColorName+'</font></b> = wanting to <br>earn money for <br>'+right_char+' more<br><br><font size="+1">←</font> "G"</p></div>'+'<div><p class = "small" style="font-family:arial;"><br>more <b><font color="'+left_char_Color+'">'+left_char_ColorName+'</font></b> = wanting to <br>earn money for <br>'+left_char+' more<br><br>"H" <font size="+1">→</font></p></div></div>'+ 
+            
+                // Bar ticks, n = 51
+            '<p style="font-family:arial;font-size:100%;margin-bottom: 10px;margin-top: 0px"><span style="color: white;font-size:18px">--------</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">........<span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">...............</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">...............<span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">........</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">--------</span></p></div>'+
+
+
+            '<div style="display: block; position: absolute; align: center; margin: auto; background-color:  '+right_char_Color+'; '+
+            'width: '+350+'px; height: '+30+'px;"></div></div>'+
+                '<div style="display: block; margin: auto; height: 50px;">'+
+
+            '<div style="display: block; position: absolute; align: center; margin: auto; background-color:  '+left_char_Color+'; '+
+            'width: '+size+'px; height: '+30+'px;"></div></div></div>'
+            return html;
+            }
+    
+    
+        // GIFTCARD FAIR
+    
+    var function_gc_fairQ = function(param){
+        var size = 50 + Math.floor(param*250); /* min 50/350, max 300/350 */
+        var html = 
+           '<p style="font-family:arial;">At minimum, how much is a <b>fair amount</b> <br>to want to earn yourself a <b><font color="'+left_gc_Color+'">'+left_gc+'</font></b> vs.<br> <b><font color="'+right_gc_Color+'">'+right_gc+'</font></b> gift card in this study?</p>'+
+            
+            '<p class = "small" style="font-family:arial;margin-top: 25px;margin-bottom:5px"><font size="2"></p>'+
+            
+            '<div class="flex-container"><div><p class = "small" style="font-family:arial;"><br>more <b><font color="'+right_gc_Color+'">'+right_gc_ColorName+'</font></b> = wanting to<br> earn a '+right_gc+' <br> gift card more<br><br><font size="+1">←</font> "G"</p></div>'+'<div><p class = "small" style="font-family:arial;"><br>more <b><font color="'+left_gc_Color+'">'+left_gc_ColorName+'</font></b> = wanting to <br>earn a '+left_gc+' <br> gift card more<br><br>"H" <font size="+1">→</font></p></div></div>'+ 
+            
+                    // Bar ticks, n = 51
+            '<p style="font-family:arial;font-size:100%;margin-bottom: 10px;margin-top: 0px"><span style="color: white;font-size:18px">--------</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">........<span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">...............</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">...............<span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">........</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">--------</span></p></div>'+
+
+
+            '<div style="display: block; position: absolute; align: center; margin: auto; background-color:  '+right_gc_Color+'; '+
+            'width: '+350+'px; height: '+30+'px;"></div></div>'+
+                '<div style="display: block; margin: auto; height: 50px;">'+
+
+            '<div style="display: block; position: absolute; align: center; margin: auto; background-color:  '+left_gc_Color+'; '+
+            'width: '+size+'px; height: '+30+'px;"></div></div></div>'
+            return html;
+    }
+    
+    
+    var motInf_char_fairQ = {
+        type: 'reconstruction',
+        stim_function: function_char_fairQ,
+        starting_value: randStart_retro_char
+    }
+    timeline.push(motInf_char_fairQ);    
+      
+    var motInf_gc_fairQ = {
+        type: 'reconstruction',
+        stim_function: function_gc_fairQ,
+        starting_value: randStart_retro_char
+    }
+    timeline.push(motInf_gc_fairQ);   
+ 
+          
+// CHARITY AVERAGE PERSON
+      
+        var function_char_avgPerson = function(param){
+        var size = 50 + Math.floor(param*250); /* min 50/350, max 300/350 */
+        var html = 
+           '<p style="font-family:arial;"><b>Think about the average person.</b><br>How much do you think they would want <br>to earn money for <b><font color="'+youColor+'">themselves</font></b><br> vs. <b><font color="D54848">the Red Cross</font></b> in this study?</p>'+
+            
+            '<p class = "small" style="font-family:arial;margin-top: 25px;margin-bottom:5px"><font size="2"></p>'+
+            
+           '<div class="flex-container"><div><p class = "small" style="font-family:arial;">more <b><font color="D54848">red</font></b> = want to earn <br>money for the Red Cross more<br><br><font size="+1">←</font> "G"</p></div>'+'<div><p class = "small" style="font-family:arial;">more <b>   <font color="'+youColor+'">'+youColor_colorName+'</font></b> = want to earn <br>money for themselves more<br><br>"H" <font size="+1">→</font></p></div></div>'+ 
+            
+                // Bar ticks, n = 51
+            '<p style="font-family:arial;font-size:100%;margin-bottom: 10px;margin-top: 0px"><span style="color: white;font-size:18px">--------</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">........<span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">...............</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">...............<span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">........</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">--------</span></p></div>'+
+
+
+            '<div style="display: block; position: absolute; align: center; margin: auto; background-color:  #D54848;'+
+            'width: '+350+'px; height: '+30+'px;"></div></div>'+
+                '<div style="display: block; margin: auto; height: 50px;">'+
+
+            '<div style="display: block; position: absolute; align: center; margin: auto; background-color:  '+youColor+';'+
+            'width: '+size+'px; height: '+30+'px;"></div></div></div>'
+            return html;
+            }
+    
+    
+        // GIFTCARD AVERAGE PERSON
+    
+    var function_gc_avgPerson = function(param){
+        var size = 50 + Math.floor(param*250); /* min 50/350, max 300/350 */
+        var html = 
+           '<p style="font-family:arial;"><b>Think about the average person.</b><br>How much do you think they would want <br>to earn themselves a <b><font color="E66D2D">Home Depot</font></b><br> vs. <b><font color="047655">Starbucks</font></b> gift card in this study?</p>'+
+            
+            '<p class = "small" style="font-family:arial;margin-top: 25px;margin-bottom:5px"><font size="2"></p>'+
+            
+           '<div class="flex-container"><div><p class = "small" style="font-family:arial;">more <b><font color="047655">green</font></b> = want to earn <br>a Starbucks gift card more<br><br><font size="+1">←</font> "G"</p></div>'+'<div><p class = "small" style="font-family:arial;">more <b><font color="E66D2D">orange</font></b> = want to earn <br>a Home Depot gift card more<br><br>"H" <font size="+1">→</font></p></div></div>'+ 
+            
+                    // Bar ticks, n = 51
+            '<p style="font-family:arial;font-size:100%;margin-bottom: 10px;margin-top: 0px"><span style="color: white;font-size:18px">--------</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">........<span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">...............</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">...............<span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">........</span><span style="color: white;font-size:18px">|</span><span style="color: white;font-size:18px">--------</span></p></div>'+
+
+
+            '<div style="display: block; position: absolute; align: center; margin: auto; background-color:  #047655;'+
+            'width: '+350+'px; height: '+30+'px;"></div></div>'+
+                '<div style="display: block; margin: auto; height: 50px;">'+
+
+            '<div style="display: block; position: absolute; align: center; margin: auto; background-color:  #E66D2D;'+
+            'width: '+size+'px; height: '+30+'px;"></div></div></div>'
+            return html;
+    }
+    
+    
+    //
+    
+    var motInf_char_avgPerson = {
+        type: 'reconstruction',
+        stim_function: function_char_avgPerson,
+        starting_value: randStart_retro_char
+    }
+    timeline.push(motInf_char_avgPerson);    
+      
+    var motInf_gc_avgPerson = {
+        type: 'reconstruction',
+        stim_function: function_gc_avgPerson,
+        starting_value: randStart_retro_char
+    }
+    timeline.push(motInf_gc_avgPerson);   
+      
+    
+      
+    
+      
+// ADDITIONAL QUESTIONS
+      
+
+    var motInf_pressure = {
+        type: 'html-slider-response',
+        min: 1,
+        max: 7,
+        start: 4,
+        step: 1,
+        stimulus: "<p>When asked about what you wanted in the study,<br> did you feel any personal or social pressure<br> to respond a certain way?<br></p><div class='flex-container'><div>Not at all</div><div>Very much so</div></div>",
+        labels: [1,2,3,4,5,6,7],
+    };
+    timeline.push(motInf_pressure);
+      
+      
+      
+      
+    var DG_exp = {
+        type: 'html-slider-response',
+        min: 1,
+        max: 5,
+        start: 3,
+        step: 1,
+        stimulus: "<p>Have you participated in similar studies in which<br> you had to choose between money for yourself or a charity?</p>",
+        labels: ["1<br> <font size='-2'>Never</font>","2<br> <font size='-2'>A few</font>","3<br> <font size='-2'>More than a few</font>","4<br> <font size='-2'>Many</font>","5 <br><font size='-2'>Countless</font>"],
+        slider_width: 400,
+        prompt: "",
+    };
+    timeline.push(DG_exp); 
+      
+    var GC_exp = {
+        type: 'html-slider-response',
+        min: 1,
+        max: 5,
+        start: 3,
+        step: 1,
+        stimulus: "<p>Have you participated in similar studies in which<br> you had to choose between different gift cards for yourself?</p>",
+        labels: ["1<br> <font size='-2'>Never</font>","2<br> <font size='-2'>A few</font>","3<br> <font size='-2'>More than a few</font>","4<br> <font size='-2'>Many</font>","5 <br><font size='-2'>Countless</font>"],
+        slider_width: 400,
+        prompt: "",
+    };
+    timeline.push(GC_exp); 
+      
+      
+    var gen = {
+        type: 'html-button-response',
+        stimulus: 'Gender:<br>',
+        choices: ['Male', 'Female','Other'],
+    };
+    timeline.push(gen);  
+      
+      
+    var age = {
+          type: 'survey-text',
+          questions: [
+            {prompt: "Age:"}
+          ],
+        }; 
+    timeline.push(age);
+    
+      
+     
+      
+   var mtvScale = {
+          type: 'survey-text',
+          questions: [
+            {prompt: "We asked you to report how much you wanted<br> one option over another using <b>colored bars</b>. We would <br>appreciate any feedback on your experience responding this way.<br><br> Please use this space to share any thoughts about this.",rows: 10, columns: 100}
+          ],
+        }; 
+    timeline.push(mtvScale);
+      
+      
+    var motInf_believable = {
+        type: 'html-slider-response',
+        min: 1,
+        max: 5,
+        start: 3,
+        step: 1,
+        stimulus: "<div class='longQ'><p>In today's study, you made choices involving various incentives including money for yourself or charity, and two gift cards for yourself. You were informed that for a subset of participants in this study, one of these choices really counts. <br><br><b>Did we communicate the fact that you could earn real money, gift cards, or money for charity, clearly and transparently enough in our instructions?</b><br><br>Please answer this question honestly and openly. This will help us to discover imperfections in our instructions.</p></div>",
+        labels: ["1<br> <font size='-2'>No, not at all</font>",2,3,4,"5 <br><font size='-2'>Yes, fully</font>"],
+        slider_width: 400,
+        prompt: ""
+    };
+    timeline.push(motInf_believable);
+      
+
+    var openSkeptic = {
+          type: 'survey-text',
+          questions: [
+            {prompt: "<div class='longQ'>If anything was unclear or during the study you had other doubts or remarks about any part of our instructions, please let us know why:</div>",rows: 10, columns: 100}
+          ],
+        }; 
+    timeline.push(openSkeptic);
+      
+    var finalWord = {
+          type: 'survey-text',
+          questions: [
+            {prompt: "Apart from this, do you have any other remarks<br> or comments about today’s study?",rows: 10, columns: 100}
+          ],
+        }; 
+    timeline.push(finalWord);
+      
+ 
+    var prolific_id = {
+        type: 'survey-text',
+        questions: [
+            {prompt: '<br><p><b>Please copy and paste your Prolific ID into the box below:</b>',
+            name: 'prolific_id',
+            required: true}
+        ]
+    };
+    timeline.push(prolific_id);
+
+    var platformLink = 'https://app.prolific.co/submissions/complete?cc=1E12AFFE';
+    var conclusion = {
+        type: 'html-button-response',
+        stimulus: '<p>Please copy the link below <b>and click the FINISH button below</b>.</p><p>Then paste the link in your browser to recieve your payment.</p><p>Thank you.</p><p><b>' + platformLink + '</b></p>',
+        choices: ['CLICK HERE TO FINISH']
+    };
+    timeline.push(conclusion);
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+// DEBUGGING
+      
+    //console.log(timeline);
+    //console.log(catchIndex);
+      
+      
+      
+        var images = ['img/you_blue.png', 'img/you_beige.png', 'img/char.png', 'img/ss_choice_gc.png', 'img/ss_choice_char.png', 'img/gc_starbucks.png', 'img/gc_homedepot.png'];
+        
+      
+      
+// WRITE TO DATABASE
+        jsPsych.init({
+            timeline: timeline, 
+            preload_images: images,
+            show_preload_progress_bar: false,
+            on_finish: function() {
+//            jsPsych.data.displayData();
+                firebase.database().ref(firebase.auth().currentUser.uid).set({
+                    data: jsPsych.data.get().values()
+                })
+            }
+        });
+      
+
+      
+  </script>
+</html>
