@@ -729,28 +729,70 @@ if(pros_q ==  "pro"){
 //////////////////////// 
       
     
+    // Function to create a random order
+      
+    const order = [...Array(51).keys()];
+      
+    
+    function shuffle(array) {
+      var currentIndex = array.length, temporaryValue, randomIndex;
+
+      // While there remain elements to shuffle...
+      while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+      }
+
+      return array;
+    }
+      
+    const random_order = shuffle(order); 
+      
+
+      
+    // Choice option pairs
+      
+    const pairs1_left = [20.00, 9.00, 36.00, 6.62, 32.45, 7.14, 32.86, 18.46, 41.58, 7.58, 21.82, 19.09, 36.41, 12.06, 27.00, 19.58, 32.42, 6.61, 40.09, 11.50, 38.33, 10.24, 35.39, 6.29, 15.00, 40.50, 8.33, 24.62, 7.50, 30.75, 7.24, 38.35, 8.85, 30.67, 10.22, 26.25, 12.89, 32.59, 11.11, 32.00, 13.44, 33.18, 8.52, 29.56, 15.00, 36.90, 39.58, 34.40, 7.34, 37.15, 11.36];
+    
+    const pairs1_right = [20.00, 36.00, 6.00, 38.38, 9.55, 32.86, 7.14, 29.54, 7.42, 42.42, 18.18, 22.91, 7.59, 28.94, 15.00, 27.42, 11.58, 34.39, 6.91, 34.50, 7.67, 32.76, 13.61, 37.71, 27.00, 7.50, 31.67, 15.38, 37.50, 10.25, 34.76, 10.65, 37.15, 15.33, 36.78, 18.75, 36.11, 7.41, 28.89, 10.00, 29.56, 13.82, 37.48, 13.44, 30.00, 7.10, 10.42, 8.60, 39.66, 8.85, 38.64];
+      
+        // identical to above (for this exp.)
+     
+    const pairs2_left = [20.00, 9.00, 36.00, 6.62, 32.45, 7.14, 32.86, 18.46, 41.58, 7.58, 21.82, 19.09, 36.41, 12.06, 27.00, 19.58, 32.42, 6.61, 40.09, 11.50, 38.33, 10.24, 35.39, 6.29, 15.00, 40.50, 8.33, 24.62, 7.50, 30.75, 7.24, 38.35, 8.85, 30.67, 10.22, 26.25, 12.89, 32.59, 11.11, 32.00, 13.44, 33.18, 8.52, 29.56, 15.00, 36.90, 39.58, 34.40, 7.34, 37.15, 11.36];
+    
+    const pairs2_right = [20.00, 36.00, 6.00, 38.38, 9.55, 32.86, 7.14, 29.54, 7.42, 42.42, 18.18, 22.91, 7.59, 28.94, 15.00, 27.42, 11.58, 34.39, 6.91, 34.50, 7.67, 32.76, 13.61, 37.71, 27.00, 7.50, 31.67, 15.38, 37.50, 10.25, 34.76, 10.65, 37.15, 15.33, 36.78, 18.75, 36.11, 7.41, 28.89, 10.00, 29.56, 13.82, 37.48, 13.44, 30.00, 7.10, 10.42, 8.60, 39.66, 8.85, 38.64];
       
       
+    // Randomize choice options based on randomorder
+       
+    const option_pairs1_left = random_order.map(i => pairs1_left[i]);
+    const option_pairs1_right = random_order.map(i => pairs1_right[i]);
+      
+        var option_pairs1 = [option_pairs1_left,option_pairs1_right]  
       
       
+    const option_pairs2_left = random_order.map(i => pairs2_left[i]);
+    const option_pairs2_right = random_order.map(i => pairs2_right[i]);
       
-      
-      
-//    var degrade_distS = [[22.0, 23.0, 120.0, 24.0, 71.4, 20.0, 105.8, 21.0, 140.0, 25.0, 25.2, 21.0, 120.0, 21.0, 39.6, 22.0, 61.6, 21.0, 133.4, 22.0, 100.0, 22.0, 59.8, 20.0, 20.0, 129.6, 21.0, 38.4, 20.0, 60.0, 23.0, 75.6, 24.0, 44.0, 25.0, 35.0, 25.0, 105.6, 20.0, 67.2, 24.0, 57.6, 22.0, 48.4, 20.0, 130.0, 76.0, 88.0, 24.0, 88.2, 23.0],[22.0, 92.0, 20.0, 139.2, 21.0, 92.0, 23.0, 33.6, 25.0, 140.0, 21.0, 25.2, 25.0, 50.4, 22.0, 30.8, 22.0, 109.2, 23.0, 66.0, 20.0, 70.4, 23.0, 120.0, 36.0, 24.0, 79.8, 24.0, 100.0, 20.0, 110.4, 21.0, 100.8, 22.0, 90.0, 25.0, 70.0, 24.0, 52.0, 21.0, 52.8, 24.0, 96.8, 22.0, 40.0, 25.0, 20.0, 22.0, 129.6, 21.0, 78.2]];
-      
-    var degrade_distS = [[20.00, 9.00, 36.00, 6.62, 32.45, 7.14, 32.86, 18.46, 41.58, 7.58, 21.82, 19.09, 36.41, 12.06, 27.00, 19.58, 32.42, 6.61, 40.09, 11.50, 38.33, 10.24, 35.39, 6.29, 15.00, 40.50, 8.33, 24.62, 7.50, 30.75, 7.24, 38.35, 8.85, 30.67, 10.22, 26.25, 12.89, 32.59, 11.11, 32.00, 13.44, 33.18, 8.52, 29.56, 15.00, 36.90, 39.58, 34.40, 7.34, 37.15, 11.36],[20.00, 36.00, 6.00, 38.38, 9.55, 32.86, 7.14, 29.54, 7.42, 42.42, 18.18, 22.91, 7.59, 28.94, 15.00, 27.42, 11.58, 34.39, 6.91, 34.50, 7.67, 32.76, 13.61, 37.71, 27.00, 7.50, 31.67, 15.38, 37.50, 10.25, 34.76, 10.65, 37.15, 15.33, 36.78, 18.75, 36.11, 7.41, 28.89, 10.00, 29.56, 13.82, 37.48, 13.44, 30.00, 7.10, 10.42, 8.60, 39.66, 8.85, 38.64]];
-      
-//    var degrade_distP = [[22.0, 23.0, 120.0, 24.0, 71.4, 20.0, 105.8, 21.0, 140.0, 25.0, 25.2, 21.0, 120.0, 21.0, 39.6, 22.0, 61.6, 21.0, 133.4, 22.0, 100.0, 22.0, 59.8, 20.0, 20.0, 129.6, 21.0, 38.4, 20.0, 60.0, 23.0, 75.6, 24.0, 44.0, 25.0, 35.0, 25.0, 105.6, 20.0, 67.2, 24.0, 57.6, 22.0, 48.4, 20.0, 130.0, 76.0, 88.0, 24.0, 88.2, 23.0],[22.0, 92.0, 20.0, 139.2, 21.0, 92.0, 23.0, 33.6, 25.0, 140.0, 21.0, 25.2, 25.0, 50.4, 22.0, 30.8, 22.0, 109.2, 23.0, 66.0, 20.0, 70.4, 23.0, 120.0, 36.0, 24.0, 79.8, 24.0, 100.0, 20.0, 110.4, 21.0, 100.8, 22.0, 90.0, 25.0, 70.0, 24.0, 52.0, 21.0, 52.8, 24.0, 96.8, 22.0, 40.0, 25.0, 20.0, 22.0, 129.6, 21.0, 78.2]];
-      
-    var degrade_distP = [[20.00, 9.00, 36.00, 6.62, 32.45, 7.14, 32.86, 18.46, 41.58, 7.58, 21.82, 19.09, 36.41, 12.06, 27.00, 19.58, 32.42, 6.61, 40.09, 11.50, 38.33, 10.24, 35.39, 6.29, 15.00, 40.50, 8.33, 24.62, 7.50, 30.75, 7.24, 38.35, 8.85, 30.67, 10.22, 26.25, 12.89, 32.59, 11.11, 32.00, 13.44, 33.18, 8.52, 29.56, 15.00, 36.90, 39.58, 34.40, 7.34, 37.15, 11.36],[20.00, 36.00, 6.00, 38.38, 9.55, 32.86, 7.14, 29.54, 7.42, 42.42, 18.18, 22.91, 7.59, 28.94, 15.00, 27.42, 11.58, 34.39, 6.91, 34.50, 7.67, 32.76, 13.61, 37.71, 27.00, 7.50, 31.67, 15.38, 37.50, 10.25, 34.76, 10.65, 37.15, 15.33, 36.78, 18.75, 36.11, 7.41, 28.89, 10.00, 29.56, 13.82, 37.48, 13.44, 30.00, 7.10, 10.42, 8.60, 39.66, 8.85, 38.64]];
+        var option_pairs2 = [option_pairs1_left,option_pairs2_right]  
+    
+    
+    // Assign a loop order variable for which block comes first
       
     var loop_order = jsPsych.randomization.sampleWithoutReplacement(["char","gc"], 1)[0];
     if(loop_order == 'char') {
-        var first = degrade_distS
-        var second = degrade_distP
+        var first = option_pairs1
+        var second = option_pairs2
     } else {
-        var first = degrade_distP
-        var second = degrade_distS
+        var first = option_pairs2
+        var second = option_pairs1
     };
 
       
@@ -758,7 +800,7 @@ if(pros_q ==  "pro"){
 // NEED TO SAVE CONTENTS OF ALL LOOPS
       
      
-    var degrade_n = 51; // MAKE THIS SHORTER FOR LAB PRES
+    var choice_set = 5; // 
     var j;
       
       
@@ -777,16 +819,21 @@ if(pros_q ==  "pro"){
     on_finish: function(data) {
         data.loop_order = loop_order,
         data.loop_youColor = loop_youColor,
-        data.loop_position = loop_position
+        data.loop_position = loop_position,
+        data.random_order = random_order,
+        data.option_pairs1 = option_pairs1,
+        data.option_pairs1 = option_pairs2,
         data.trial = "startTask"}
     };
     timeline.push(startTask);   
+      
+   var ITI = [500,600,700,800,900,1000];
       
    var fixation = {
     type: 'html-keyboard-response',
     stimulus: "<p style='font-size: 50px'> + </p>",
     choices: [27],
-    trial_duration: 750,
+    trial_duration: function(){ return jsPsych.randomization.sampleWithoutReplacement(ITI, 1)[0]; },
         on_finish: function(data){
             data.trial = 'fixation'
         }
@@ -806,18 +853,12 @@ if(pros_q ==  "pro"){
       
       
       
-      
-      
-      
-      
-      
-      
     if(loop_order == 'char') {
         
         
    
 //CHAR FIRST
-        for (j = 0; j < degrade_n; j++) {
+        for (j = 0; j < choice_set; j++) {
             if(j < 26) {
                 var char_half1 = {
                     type: 'html-button-response',
@@ -826,7 +867,11 @@ if(pros_q ==  "pro"){
                     margin_horizontal: '100px',
                     button_html: '<button class="choice-button">%choice%</button>',
                     on_finish: function(data){
-                        data.trial = 'char_half1'
+                        data.trial = 'char_half1',
+                        data.optionL = left_char_Stim,
+                        data.optionR = right_char_Stim,
+                        data.valueL = leftNum[j],
+                        data.valueR = rightNum[j]
                     }
                 };
                 timeline.push(char_half1);
@@ -857,7 +902,11 @@ if(pros_q ==  "pro"){
                     margin_horizontal: '100px',
                     button_html: '<button class="choice-button">%choice%</button>',
                     on_finish: function(data){
-                        data.trial = 'char_half2'
+                        data.trial = 'char_half2',
+                        data.optionL = left_char_Stim,
+                        data.optionR = right_char_Stim,
+                        data.valueL = leftNum[j],
+                        data.valueR = rightNum[j]
                     }
                 };
                 timeline.push(char_half2);
@@ -877,7 +926,7 @@ if(pros_q ==  "pro"){
         
         
 //GC SECOND
-        for (j = 0; j < degrade_n; j++) {
+        for (j = 0; j < choice_set; j++) {
 
             if(j < 26) {
                 var gc_half1 = {
@@ -887,7 +936,11 @@ if(pros_q ==  "pro"){
                     margin_horizontal: '100px',
                     button_html: '<button class="choice-button">%choice%</button>',
                     on_finish: function(data){
-                        data.trial = 'gc_half1'
+                        data.trial = 'gc_half1',
+                        data.optionL = left_gc_Stim,
+                        data.optionR = right_gc_Stim,
+                        data.valueL = leftNum[j],
+                        data.valueR = rightNum[j]
                     }
                 };
                 timeline.push(gc_half1);
@@ -916,7 +969,11 @@ if(pros_q ==  "pro"){
                     margin_horizontal: '100px',
                     button_html: '<button class="choice-button">%choice%</button>',
                     on_finish: function(data){
-                        data.trial = 'gc_half2'
+                        data.trial = 'gc_half2',
+                        data.optionL = left_gc_Stim,
+                        data.optionR = right_gc_Stim,
+                        data.valueL = leftNum[j],
+                        data.valueR = rightNum[j]
                     }
                 };
                 timeline.push(gc_half2);
@@ -927,7 +984,7 @@ if(pros_q ==  "pro"){
     } else {
             
 //GC FIRST
-        for (j = 0; j < degrade_n; j++) {
+        for (j = 0; j < choice_set; j++) {
             if(j < 26) {
                 var gc_half1 = {
                     type: 'html-button-response',
@@ -987,7 +1044,7 @@ if(pros_q ==  "pro"){
                 timeline.push(nextTask);   
             
 //CHAR SECOND 
-        for (j = 0; j < degrade_n; j++) {
+        for (j = 0; j < choice_set; j++) {
 
                 if(j < 26) {
                     var char_half1 = {
