@@ -169,32 +169,32 @@
 var timeline = []; 
       
     
- 
-      
-      
-//Function to check whether consent has been given
-var check_consent = function(elem) {
-        if (document.getElementById('consent_checkbox').checked) {
-            return true;
-        }
-        else {
-            alert("If you wish to participate, you must check the box next to the statement 'I agree to participate in this study.'");
-            return false;
-        }
-        return false;
-    };
-
-//Presents external consent page to participants
-    var consent = {
-            type:'external-html',
-            url: "consent.html",
-            cont_btn: "start",
-            check_fn: check_consent
-        };
-        timeline.push(consent);
-      
-      
-      
+// 
+//      
+//      
+////Function to check whether consent has been given
+//var check_consent = function(elem) {
+//        if (document.getElementById('consent_checkbox').checked) {
+//            return true;
+//        }
+//        else {
+//            alert("If you wish to participate, you must check the box next to the statement 'I agree to participate in this study.'");
+//            return false;
+//        }
+//        return false;
+//    };
+//
+////Presents external consent page to participants
+//    var consent = {
+//            type:'external-html',
+//            url: "consent.html",
+//            cont_btn: "start",
+//            check_fn: check_consent
+//        };
+//        timeline.push(consent);
+//      
+//      
+//      
       
       
  ////////////////////////////////////////////////////////////////////////////////////////////
@@ -323,6 +323,9 @@ var check_consent = function(elem) {
         type: 'reconstruction_instructions',
         stim_function: function_practice3,
         starting_value: 1,
+        on_finish: function(data){
+            data.trial = 'practice3'
+        }
     }
     timeline.push(practice3);
       
@@ -352,12 +355,15 @@ var check_consent = function(elem) {
     
 
       
-    var motInf_practice4 = {
+    var practice4 = {
         type: 'reconstruction_instructions',
         stim_function: function_practice4,
         starting_value: .5,
+        on_finish: function(data){
+            data.trial = 'practice4'
+        }
     }
-    timeline.push(motInf_practice4);
+    timeline.push(practice4);
       
       
       
@@ -385,12 +391,15 @@ var check_consent = function(elem) {
     
 
       
-    var motInf_practice5 = {
+    var practice5 = {
         type: 'reconstruction_instructions',
         stim_function: function_practice5,
         starting_value: 0,
+        on_finish: function(data){
+            data.trial = 'practice5'
+        }
     }
-    timeline.push(motInf_practice5);
+    timeline.push(practice5);
       
       
       
@@ -402,8 +411,10 @@ var check_consent = function(elem) {
         stimulus: 'The response below would indicate which of the following:<br><img src="img/pear_bar.png">',
         choices: ['Wanting a <b><font color="C5D270">pear</font></b> 6x more', 
                   'Wanting a <b><font color="C5D270">pear</font></b>/<b><font color="8E5485">plum</font></b> <b>equally</b>',
-                  'Wanting a <b><font color="8E5485">plum</font></b> 6x more']
-//    }}
+                  'Wanting a <b><font color="8E5485">plum</font></b> 6x more'],
+        on_finish: function(data){
+            data.trial = 'attncheck'
+        }
       };
 
       
@@ -419,6 +430,9 @@ var check_consent = function(elem) {
                 }
             },
             choices: ['I understand'],
+            on_finish: function(data){
+                data.trial = 'attncheck_fb'
+            }
         }
                   
 
@@ -630,7 +644,10 @@ timeline.push(attncheck_fb);
     var think_pro = {
       type: "instructions",
       pages: ['<div class="instructions"><p>Please press "Next" to begin the study.</p></div>'],
-    show_clickable_nav: true
+    show_clickable_nav: true,
+        on_finish: function(data){
+            data.trial = 'think_pro'
+        }
     };
     timeline.push(think_pro);  
       
@@ -645,21 +662,25 @@ if(pros_q ==  "pro"){
     var think_pro2 = {
       type: "instructions",
       pages: ['<p>Think about the different options you can pursue in this study.</p>'],
-    show_clickable_nav: true
+    show_clickable_nav: true,
+        on_finish: function(data){
+            data.trial = 'think_pro2'
+        }
     };
     timeline.push(think_pro2); 
     
-    var motInf_pro_char = {
+    var pro_char = {
         type: 'reconstruction',
         stim_function: function_char,
         starting_value: randStart_pro_char,
         on_finish: function(data){
-            data.pros_q = 'True'
+            data.pros_q = 'True',
+            data.trial = 'pro_char'
         }
     };
-    timeline.push(motInf_pro_char); 
+    timeline.push(pro_char); 
     
-    var motInf_pro_char_conf = {
+    var pro_char_conf = {
         type: 'html-slider-response',
         min: 1,
         max: 7,
@@ -667,18 +688,24 @@ if(pros_q ==  "pro"){
         step: 1,
         stimulus: "<p>How <b>confident</b> are you that you <br>accurately reported what you want? <br> <div class='flex-container'><div>Not at all</div><div>Extremely</div></div>",
         labels: [1,2,3,4,5,6,7],
+        on_finish: function(data){
+            data.trial = 'pro_char_conf'
+        }
     };
-    timeline.push(motInf_pro_char_conf);
+    timeline.push(pro_char_conf);
     
-    var motInf_pro_gc = {
+    var pro_gc = {
         type: 'reconstruction',
         stim_function: function_gc,
-        starting_value: randStart_pro_gc
+        starting_value: randStart_pro_gc,
+        on_finish: function(data){
+            data.trial = 'pro_gc'
+        }
     };
-    timeline.push(motInf_pro_gc);  
+    timeline.push(pro_gc);  
       
 
-    var motInf_pro_gc_conf = {
+    var pro_gc_conf = {
         type: 'html-slider-response',
         min: 1,
         max: 7,
@@ -686,8 +713,11 @@ if(pros_q ==  "pro"){
         step: 1,
         stimulus: "<p>How <b>confident</b> are you that you <br>accurately reported what you want? <br> <div class='flex-container'><div>Not at all</div><div>Extremely</div></div>",
         labels: [1,2,3,4,5,6,7],
+        on_finish: function(data){
+            data.trial = 'pro_gc_conf'
+        }
     };
-    timeline.push(motInf_pro_gc_conf);
+    timeline.push(pro_gc_conf);
 };
       
     
@@ -747,7 +777,8 @@ if(pros_q ==  "pro"){
     on_finish: function(data) {
         data.loop_order = loop_order,
         data.loop_youColor = loop_youColor,
-        data.loop_position = loop_position}
+        data.loop_position = loop_position
+        data.trial = "startTask"}
     };
     timeline.push(startTask);   
       
@@ -755,7 +786,10 @@ if(pros_q ==  "pro"){
     type: 'html-keyboard-response',
     stimulus: "<p style='font-size: 50px'> + </p>",
     choices: [27],
-    trial_duration: 750
+    trial_duration: 750,
+        on_finish: function(data){
+            data.trial = 'fixation'
+        }
     };
     timeline.push(fixation);  
     
@@ -769,212 +803,246 @@ if(pros_q ==  "pro"){
       
       
       
-//      
-//      
-//      
-//      
-//      
-//      
-//      
-//      
-//      
-//    if(loop_order == 'char') {
-//        
-//        
-//   
-////CHAR FIRST
-//        for (j = 0; j < degrade_n; j++) {
-//            if(j < 26) {
-//                var char_half1 = {
-//                    type: 'html-button-response',
-//                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_char_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_char_Stim+'"></div></div>'],
-//                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(first[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(first[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
-//                    margin_horizontal: '100px',
-//                    button_html: '<button class="choice-button">%choice%</button>',
-//                };
-//                timeline.push(char_half1);
-//                timeline.push(fixation);
-//            };
-//
-//            
-//            if(j == catchIndex) {
-//                var catchTrial = {
-//                    type: 'html-button-response',
-//                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+youColor_pic+'"></div>'+'<div id="rightStim"><img src="img/'+youColor_pic+'"></div></div>'],
-//                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ "50.00" + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+ "0.00" + '</div></div>'],
-//                    margin_horizontal: '100px',
-//                    button_html: '<button class="choice-button">%choice%</button>',
-//                    on_finish: function(data) {
-//                        data.catchIndex = catchIndex}
-//                    };
-//                    timeline.push(catchTrial);
-//                    timeline.push(fixation);
-//                };
-//
-//              if(j >= 26) {
-//                var char_half2 = {
-//                    type: 'html-button-response',
-//                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_char_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_char_Stim+'"></div></div>'],
-//                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(second[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(second[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
-//                    margin_horizontal: '100px',
-//                    button_html: '<button class="choice-button">%choice%</button>',
-//                };
-//                timeline.push(char_half2);
-//                timeline.push(fixation);
-//            };};
-//        
-//            /* define instructions trial */
-//            var nextTask = {
-//              type: "instructions",
-//              pages: ['<p>You have completed the first set of choices. Half way there! Press continue to proceed to the new set of choices when ready.</p>'],
-//            show_clickable_nav: true
-//            };
-//                timeline.push(nextTask);   
-//        
-//        
-////GC SECOND
-//        for (j = 0; j < degrade_n; j++) {
-//
-//            if(j < 26) {
-//                var gc_half1 = {
-//                    type: 'html-button-response',
-//                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_gc_Stim+'"></div></div>'],
-//                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(first[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(first[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
-//                    margin_horizontal: '100px',
-//                    button_html: '<button class="choice-button">%choice%</button>',
-//                };
-//                timeline.push(gc_half1);
-//                timeline.push(fixation);};
-//                  
-//            if(j == catchIndex) {
-//                var catchTrial = {
-//                    type: 'html-button-response',
-//                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+left_gc_Stim+'"></div></div>'],
-//                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ "50.00" + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+ "0.00" + '</div></div>'],
-//                    margin_horizontal: '100px',
-//                    button_html: '<button class="choice-button">%choice%</button>',
-//                    on_finish: function(data) {
-//                        data.catchIndex = catchIndex}
-//                    };
-//                    timeline.push(catchTrial);
-//                    timeline.push(fixation);
-//                };
-//
-//              if(j >= 26) {
-//                var gc_half2 = {
-//                    type: 'html-button-response',
-//                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_gc_Stim+'"></div></div>'],
-//                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(second[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(second[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
-//                    margin_horizontal: '100px',
-//                    button_html: '<button class="choice-button">%choice%</button>',
-//                };
-//                timeline.push(gc_half2);
-//                timeline.push(fixation);
-//            };}
-//
-//        
-//    } else {
-//            
-////GC FIRST
-//        for (j = 0; j < degrade_n; j++) {
-//            if(j < 26) {
-//                var gc_half1 = {
-//                    type: 'html-button-response',
-//                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_gc_Stim+'"></div></div>'],
-//                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(first[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(first[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
-//                    margin_horizontal: '100px',
-//                    button_html: '<button class="choice-button">%choice%</button>',
-//                };
-//                timeline.push(gc_half1);
-//                timeline.push(fixation);
-//            };
-//
-//            
-//            if(j == catchIndex) {
-//                var catchTrial = {
-//                    type: 'html-button-response',
-//                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+left_gc_Stim+'"></div></div>'],
-//                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ "50.00" + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+ "0.00" + '</div></div>'],
-//                    margin_horizontal: '100px',
-//                    button_html: '<button class="choice-button">%choice%</button>',
-//                    on_finish: function(data) {
-//                        data.catchIndex = catchIndex}
-//                    };
-//                    timeline.push(catchTrial);
-//                    timeline.push(fixation);
-//                };
-//
-//              if(j >= 26) {
-//                var gc_half2 = {
-//                    type: 'html-button-response',
-//                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_gc_Stim+'"></div></div>'],
-//                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(second[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(second[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
-//                    margin_horizontal: '100px',
-//                    button_html: '<button class="choice-button">%choice%</button>',
-//                };
-//                timeline.push(gc_half2);
-//                timeline.push(fixation);
-//            };};
-//        
-//            
-//            /* define instructions trial */
-//            var nextTask = {
-//              type: "instructions",
-//              pages: ['<div class="instructions"><p>You have completed the first set of choices. Half way there! <br> Press continue to proceed to the new set of choices when you are ready.</p>'],
-//            show_clickable_nav: true
-//            };
-//                timeline.push(nextTask);   
-//            
-////CHAR SECOND 
-//        for (j = 0; j < degrade_n; j++) {
-//
-//                if(j < 26) {
-//                    var char_half1 = {
-//                        type: 'html-button-response',
-//                        stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_char_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_char_Stim+'"></div></div>'],
-//                        choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(first[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(first[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
-//                        margin_horizontal: '100px',
-//                        button_html: '<button class="choice-button">%choice%</button>',
-//                    };
-//                    timeline.push(char_half1);
-//                    timeline.push(fixation);
-//                };
-//
-//            
-//            if(j == catchIndex) {
-//                var catchTrial = {
-//                    type: 'html-button-response',
-//                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+youColor_pic+'"></div>'+'<div id="rightStim"><img src="img/'+youColor_pic+'"></div></div>'],
-//                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ "50.00" + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+ "0.00" + '</div></div>'],
-//                    margin_horizontal: '100px',
-//                    button_html: '<button class="choice-button">%choice%</button>',
-//                    on_finish: function(data) {
-//                        data.catchIndex = catchIndex}
-//                    };
-//                    timeline.push(catchTrial);
-//                    timeline.push(fixation);
-//                };
-//
-//                  if(j >= 26) {
-//                    var char_half2 = {
-//                        type: 'html-button-response',
-//                        stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_char_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_char_Stim+'"></div></div>'],
-//                        choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(second[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(second[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
-//                        margin_horizontal: '100px',
-//                        button_html: '<button class="choice-button">%choice%</button>',
-//                    };
-//                    timeline.push(char_half2);
-//                    timeline.push(fixation);
-//                };};      
-//        };
-//         
-//
-//      
-//  
-//      
-//      
-//      
-//      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    if(loop_order == 'char') {
+        
+        
+   
+//CHAR FIRST
+        for (j = 0; j < degrade_n; j++) {
+            if(j < 26) {
+                var char_half1 = {
+                    type: 'html-button-response',
+                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_char_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_char_Stim+'"></div></div>'],
+                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(first[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(first[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+                    margin_horizontal: '100px',
+                    button_html: '<button class="choice-button">%choice%</button>',
+                    on_finish: function(data){
+                        data.trial = 'char_half1'
+                    }
+                };
+                timeline.push(char_half1);
+                timeline.push(fixation);
+            };
+
+            
+            if(j == catchIndex) {
+                var catchTrial = {
+                    type: 'html-button-response',
+                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+youColor_pic+'"></div>'+'<div id="rightStim"><img src="img/'+youColor_pic+'"></div></div>'],
+                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ "50.00" + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+ "0.00" + '</div></div>'],
+                    margin_horizontal: '100px',
+                    button_html: '<button class="choice-button">%choice%</button>',
+                    on_finish: function(data) {
+                        data.catchIndex = catchIndex
+                        data.trial = "catchTrial"}
+                    };
+                    timeline.push(catchTrial);
+                    timeline.push(fixation);
+                };
+
+              if(j >= 26) {
+                var char_half2 = {
+                    type: 'html-button-response',
+                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_char_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_char_Stim+'"></div></div>'],
+                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(second[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(second[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+                    margin_horizontal: '100px',
+                    button_html: '<button class="choice-button">%choice%</button>',
+                    on_finish: function(data){
+                        data.trial = 'char_half2'
+                    }
+                };
+                timeline.push(char_half2);
+                timeline.push(fixation);
+            };};
+        
+            /* define instructions trial */
+            var nextTask = {
+              type: "instructions",
+              pages: ['<p>You have completed the first set of choices. Half way there! Press continue to proceed to the new set of choices when ready.</p>'],
+            show_clickable_nav: true,
+            on_finish: function(data){
+            data.trial = 'nextTask'
+        }
+            };
+                timeline.push(nextTask);   
+        
+        
+//GC SECOND
+        for (j = 0; j < degrade_n; j++) {
+
+            if(j < 26) {
+                var gc_half1 = {
+                    type: 'html-button-response',
+                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_gc_Stim+'"></div></div>'],
+                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(first[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(first[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+                    margin_horizontal: '100px',
+                    button_html: '<button class="choice-button">%choice%</button>',
+                    on_finish: function(data){
+                        data.trial = 'gc_half1'
+                    }
+                };
+                timeline.push(gc_half1);
+                timeline.push(fixation);};
+                  
+            if(j == catchIndex) {
+                var catchTrial = {
+                    type: 'html-button-response',
+                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+left_gc_Stim+'"></div></div>'],
+                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ "50.00" + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+ "0.00" + '</div></div>'],
+                    margin_horizontal: '100px',
+                    button_html: '<button class="choice-button">%choice%</button>',
+                    on_finish: function(data) {
+                        data.catchIndex = catchIndex
+                        data.trial = "catchTrial"}
+                    };
+                    timeline.push(catchTrial);
+                    timeline.push(fixation);
+                };
+
+              if(j >= 26) {
+                var gc_half2 = {
+                    type: 'html-button-response',
+                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_gc_Stim+'"></div></div>'],
+                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(second[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(second[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+                    margin_horizontal: '100px',
+                    button_html: '<button class="choice-button">%choice%</button>',
+                    on_finish: function(data){
+                        data.trial = 'gc_half2'
+                    }
+                };
+                timeline.push(gc_half2);
+                timeline.push(fixation);
+            };}
+
+        
+    } else {
+            
+//GC FIRST
+        for (j = 0; j < degrade_n; j++) {
+            if(j < 26) {
+                var gc_half1 = {
+                    type: 'html-button-response',
+                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_gc_Stim+'"></div></div>'],
+                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(first[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(first[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+                    margin_horizontal: '100px',
+                    button_html: '<button class="choice-button">%choice%</button>',
+                    on_finish: function(data){
+                        data.trial = 'gc_half1'
+                    }
+                };
+                timeline.push(gc_half1);
+                timeline.push(fixation);
+            };
+
+            
+            if(j == catchIndex) {
+                var catchTrial = {
+                    type: 'html-button-response',
+                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+left_gc_Stim+'"></div></div>'],
+                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ "50.00" + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+ "0.00" + '</div></div>'],
+                    margin_horizontal: '100px',
+                    button_html: '<button class="choice-button">%choice%</button>',
+                    on_finish: function(data) {
+                        data.catchIndex = catchIndex
+                        data.trial = "catchTrial"}
+                    };
+                    timeline.push(catchTrial);
+                    timeline.push(fixation);
+                };
+
+              if(j >= 26) {
+                var gc_half2 = {
+                    type: 'html-button-response',
+                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_gc_Stim+'"></div></div>'],
+                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(second[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(second[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+                    margin_horizontal: '100px',
+                    button_html: '<button class="choice-button">%choice%</button>',
+                    on_finish: function(data){
+                        data.trial = 'gc_half2'
+                    }
+                };
+                timeline.push(gc_half2);
+                timeline.push(fixation);
+            };};
+        
+            
+            /* define instructions trial */
+            var nextTask = {
+              type: "instructions",
+              pages: ['<div class="instructions"><p>You have completed the first set of choices. Half way there! <br> Press continue to proceed to the new set of choices when you are ready.</p>'],
+                show_clickable_nav: true,
+                on_finish: function(data){
+                data.trial = 'nextTask'
+                }       
+            };
+                timeline.push(nextTask);   
+            
+//CHAR SECOND 
+        for (j = 0; j < degrade_n; j++) {
+
+                if(j < 26) {
+                    var char_half1 = {
+                        type: 'html-button-response',
+                        stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_char_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_char_Stim+'"></div></div>'],
+                        choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(first[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(first[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+                        margin_horizontal: '100px',
+                        button_html: '<button class="choice-button">%choice%</button>',
+                        on_finish: function(data){
+                            data.trial = 'char_half1'
+                        }
+                    };
+                    timeline.push(char_half1);
+                    timeline.push(fixation);
+                };
+
+            
+            if(j == catchIndex) {
+                var catchTrial = {
+                    type: 'html-button-response',
+                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+youColor_pic+'"></div>'+'<div id="rightStim"><img src="img/'+youColor_pic+'"></div></div>'],
+                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ "50.00" + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+ "0.00" + '</div></div>'],
+                    margin_horizontal: '100px',
+                    button_html: '<button class="choice-button">%choice%</button>',
+                    on_finish: function(data) {
+                        data.catchIndex = catchIndex
+                        data.trial = "catchTrial"}
+                    };
+                    timeline.push(catchTrial);
+                    timeline.push(fixation);
+                };
+
+                  if(j >= 26) {
+                    var char_half2 = {
+                        type: 'html-button-response',
+                        stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_char_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_char_Stim+'"></div></div>'],
+                        choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(second[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(second[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+                        margin_horizontal: '100px',
+                        button_html: '<button class="choice-button">%choice%</button>',
+                        on_finish: function(data){
+                            data.trial = 'char_half2'
+                        }
+                    };
+                    timeline.push(char_half2);
+                    timeline.push(fixation);
+                };};      
+        };
+         
+
+      
+  
+      
+      
+      
+      
       
       
       
@@ -989,7 +1057,10 @@ if(pros_q ==  "pro"){
     var fin = {
       type: "instructions",
       pages: ['<p>You have now completed the main section of the study. <br>We will now ask you a few more questions.</p>'],
-    show_clickable_nav: true
+    show_clickable_nav: true,
+        on_finish: function(data){
+            data.trial = 'fin'
+        }
     };
     timeline.push(fin);  
       
@@ -997,20 +1068,26 @@ if(pros_q ==  "pro"){
     var think_retro = {
       type: "instructions",
       pages: ['<p>Consider what you wanted throughout the choice task.</p>'],
-    show_clickable_nav: true
+    show_clickable_nav: true,
+        on_finish: function(data){
+            data.trial = 'think_retro'
+        }
     };
     timeline.push(think_retro);  
       
       
-    var motInf_retro_char = {
+    var retro_char = {
         type: 'reconstruction',
         stim_function: function_char_retro,
-        starting_value: randStart_retro_char
+        starting_value: randStart_retro_char,
+        on_finish: function(data){
+            data.trial = 'retro_char'
+        }
     }
-    timeline.push(motInf_retro_char); 
+    timeline.push(retro_char); 
       
     
-    var motInf_pro_retro_conf = {
+    var pro_retro_conf = {
         type: 'html-slider-response',
         min: 1,
         max: 7,
@@ -1018,19 +1095,25 @@ if(pros_q ==  "pro"){
         step: 1,
         stimulus: "<p>How <b>confident</b> are you that you <br>accurately reported what you wanted? <br> <div class='flex-container'><div>Not at all</div><div>Extremely</div></div>",
         labels: [1,2,3,4,5,6,7],
+        on_finish: function(data){
+            data.trial = 'pro_retro_conf'
+        }
     };
-      timeline.push(motInf_pro_retro_conf);  
+      timeline.push(pro_retro_conf);  
       
       
-    var motInf_retro_gc = {
+    var retro_gc = {
         type: 'reconstruction',
         stim_function: function_gc_retro,
-        starting_value: randStart_retro_gc
+        starting_value: randStart_retro_gc,
+        on_finish: function(data){
+            data.trial = 'retro_gc'
+        }
     }
-    timeline.push(motInf_retro_gc);  
+    timeline.push(retro_gc);  
       
 
-    var motInf_retro_gc_conf = {
+    var retro_gc_conf = {
         type: 'html-slider-response',
         min: 1,
         max: 7,
@@ -1038,15 +1121,21 @@ if(pros_q ==  "pro"){
         step: 1,
         stimulus: "<p>How <b>confident</b> are you that you <br>accurately reported what you wanted? <br> <div class='flex-container'><div>Not at all</div><div>Extremely</div></div>",
         labels: [1,2,3,4,5,6,7],
+        on_finish: function(data){
+            data.trial = 'retro_gc_conf'
+        }
     };
-      timeline.push(motInf_retro_gc_conf);     
+      timeline.push(retro_gc_conf);     
       
       
 
     var additionalQs = {
       type: "instructions",
       pages: ['<p>We will now ask some new questions about<br>your thoughts and feelings about the study.</p>'],
-    show_clickable_nav: true
+    show_clickable_nav: true,
+        on_finish: function(data){
+            data.trial = 'additionalQs'
+        }
     };
     timeline.push(additionalQs);  
       
@@ -1104,19 +1193,25 @@ if(pros_q ==  "pro"){
     }
     
     
-    var motInf_char_fairQ = {
+    var char_fairQ = {
         type: 'reconstruction',
         stim_function: function_char_fairQ,
-        starting_value: randStart_retro_char
+        starting_value: randStart_retro_char,
+        on_finish: function(data){
+            data.trial = 'char_fairQ'
+        }
     }
-    timeline.push(motInf_char_fairQ);    
+    timeline.push(char_fairQ);    
       
-    var motInf_gc_fairQ = {
-        type: 'reconstruction',
-        stim_function: function_gc_fairQ,
-        starting_value: randStart_retro_char
-    }
-    timeline.push(motInf_gc_fairQ);   
+//    var gc_fairQ = {  // Excluding this question because it doesn't make sense
+//        type: 'reconstruction',
+//        stim_function: function_gc_fairQ,
+//        starting_value: randStart_retro_char,
+//        on_finish: function(data){
+//            data.trial = 'gc_fairQ'
+//        }
+//    }
+//    timeline.push(gc_fairQ);   
  
           
 // CHARITY AVERAGE PERSON
@@ -1171,19 +1266,25 @@ if(pros_q ==  "pro"){
     
     //
     
-    var motInf_char_avgPerson = {
+    var char_avgPerson = {
         type: 'reconstruction',
         stim_function: function_char_avgPerson,
-        starting_value: randStart_retro_char
+        starting_value: randStart_retro_char,
+        on_finish: function(data){
+            data.trial = 'char_avgPerson'
+        }
     }
-    timeline.push(motInf_char_avgPerson);    
+    timeline.push(char_avgPerson);    
       
-    var motInf_gc_avgPerson = {
+    var gc_avgPerson = {
         type: 'reconstruction',
         stim_function: function_gc_avgPerson,
-        starting_value: randStart_retro_char
+        starting_value: randStart_retro_char,
+        on_finish: function(data){
+            data.trial = 'gc_avgPerson'
+        }
     }
-    timeline.push(motInf_gc_avgPerson);   
+    timeline.push(gc_avgPerson);   
       
       
       
@@ -1202,26 +1303,33 @@ if(pros_q ==  "pro"){
       pages: ['<div class="instructions"><p>Earlier, we asked you how much you wanted certain incentives relative to others. We now want to ask you to briefly elaborate on why.</p></div>'],
     show_clickable_nav: true,
     on_finish: function(data) {
-        data.openQ_first = openQ_first}
+        data.openQ_first = openQ_first
+        data.trial = "openQ_intro"}
     };
     timeline.push(openQ_intro);  
   
 
     if(openQ_first == 'U_GH') {
         
-        var openMtv_char_U = { // FIRST CHAR IS U
+        var openMtv_char_YOU = { // FIRST CHAR IS U
           type: 'survey-text',
           questions: [
             {prompt: "<p>Could you briefly explain why you wanted (or did not want) to earn money for <b>yourself</b>",rows: 10, columns: 100}
           ],
+        on_finish: function(data){
+            data.trial = 'openMtv_char_YOU'
+        }
         }; 
-            timeline.push(openMtv_char_U);
+            timeline.push(openMtv_char_YOU);
         
         var openMtv_char_RC = {
           type: 'survey-text',
           questions: [
             {prompt: "<p>Could you briefly explain why you wanted (or did not want) to earn money for <b>the Red Cross</b>",rows: 10, columns: 100}
           ],
+        on_finish: function(data){
+            data.trial = 'openMtv_char_RC'
+        }
         }; 
             timeline.push(openMtv_char_RC);
         
@@ -1232,6 +1340,9 @@ if(pros_q ==  "pro"){
           questions: [
             {prompt: "<p>Could you briefly explain why you wanted (or did not want) to earn <b>a Grubhub giftcard</b>",rows: 10, columns: 100}
           ],
+        on_finish: function(data){
+            data.trial = 'openMtv_gc_GH'
+        }
         }; 
             timeline.push(openMtv_gc_GH);
       
@@ -1240,6 +1351,9 @@ if(pros_q ==  "pro"){
           questions: [
             {prompt: "<p>Could you briefly explain why you wanted (or did not want) to earn <b>a BestBuy giftcard</b>",rows: 10, columns: 100}
           ],
+        on_finish: function(data){
+            data.trial = 'openMtv_gc_BB'
+        }
         }; 
             timeline.push(openMtv_gc_BB);
       
@@ -1252,16 +1366,22 @@ if(pros_q ==  "pro"){
           questions: [
             {prompt: "<p>Could you briefly explain why you wanted (or did not want) to earn money for <b>the Red Cross</b>",rows: 10, columns: 100}
           ],
+        on_finish: function(data){
+            data.trial = 'openMtv_char_RC'
+        }
         }; 
             timeline.push(openMtv_char_RC);
         
-        var openMtv_char_U = { 
+        var openMtv_char_YOU = { 
           type: 'survey-text',
           questions: [
             {prompt: "<p>Could you briefly explain why you wanted (or did not want) to earn money for <b>yourself</b>",rows: 10, columns: 100}
           ],
+        on_finish: function(data){
+            data.trial = 'openMtv_char_YOU'
+        }
         }; 
-            timeline.push(openMtv_char_U);
+            timeline.push(openMtv_char_YOU);
         
         
         
@@ -1270,6 +1390,9 @@ if(pros_q ==  "pro"){
           questions: [
             {prompt: "<p>Could you briefly explain why you wanted (or did not want) to earn <b>a BestBuy giftcard</b>",rows: 10, columns: 100}
           ],
+        on_finish: function(data){
+            data.trial = 'openMtv_gc_BB'
+        }
         }; 
             timeline.push(openMtv_gc_BB);
         
@@ -1278,6 +1401,9 @@ if(pros_q ==  "pro"){
           questions: [
             {prompt: "<p>Could you briefly explain why you wanted (or did not want) to earn <b>a Grubhub giftcard</b>",rows: 10, columns: 100}
           ],
+        on_finish: function(data){
+            data.trial = 'openMtv_gc_GH'
+        }
         }; 
             timeline.push(openMtv_gc_GH);
         
@@ -1291,20 +1417,26 @@ if(pros_q ==  "pro"){
  // Memory Questions    
         
             
-          var motInf_mem_char = {
+          var mem_char = {
         type: 'survey-text',
         questions: [
-            {prompt:"<div class='instructions'><p>Please think back to the choices you made earlier.</p><p>We would like you to remember, on average across your choices between earning money for yourself and money for the Red Cross, <b>what percent of your choices were choices to earn money for the Red Cross</b>.</p><p>You will receive a monetary bonus that depends on how accurate your response is. The closer your response is to your actual average chouce percent, the more money you will earn. If you report exactly the correct amount, you will receive 100% of the bonus. For each 1% off your response is from your actual average, your bonus will decrease by 2%.</p><p>Enter the choice percent as a number (no letters or symbols) between 0 and 100</div>",rows: 1, columns: 3}]
+            {prompt:"<div class='instructions'><p>Please think back to the choices you made earlier.</p><p>We would like you to remember, on average across your choices between earning money for yourself and money for the Red Cross, <b>what percent of your choices were choices to earn money for the Red Cross</b>.</p><p>You will receive a monetary bonus that depends on how accurate your response is. The closer your response is to your actual average chouce percent, the more money you will earn. If you report exactly the correct amount, you will receive 100% of the bonus. For each 1% off your response is from your actual average, your bonus will decrease by 2%.</p><p>Enter the choice percent as a number (no letters or symbols) between 0 and 100</div>",rows: 1, columns: 3}],
+        on_finish: function(data){
+            data.trial = 'mem_char'
+        }
     };
-    timeline.push(motInf_mem_char);
+    timeline.push(mem_char);
     
       
-             var motInf_mem_gc = {
+             var mem_gc = {
         type: 'survey-text',
         questions: [
-            {prompt:"<div class='instructions'><p>Please think back to the choices you made earlier.</p><p>We would like you to remember, on average across your choices between earning a GrubHub giftcard and a BestBuy giftcard, <b>what percent of your choices were choices to earn a BestBuy giftcard</b>.</p><p>You will receive a monetary bonus that depends on how accurate your response is. The closer your response is to your actual average choice percent, the more money you will earn. If you report exactly the correct amount, you will receive 100% of the bonus. For each 1% off your response is from your actual average, your bonus will decrease by 2%.</p><p>Enter the choice percent as a number (no letters or symbols) between 0 and 100</div>",rows: 1, columns: 3}]
+            {prompt:"<div class='instructions'><p>Please think back to the choices you made earlier.</p><p>We would like you to remember, on average across your choices between earning a GrubHub giftcard and a BestBuy giftcard, <b>what percent of your choices were choices to earn a BestBuy giftcard</b>.</p><p>You will receive a monetary bonus that depends on how accurate your response is. The closer your response is to your actual average choice percent, the more money you will earn. If you report exactly the correct amount, you will receive 100% of the bonus. For each 1% off your response is from your actual average, your bonus will decrease by 2%.</p><p>Enter the choice percent as a number (no letters or symbols) between 0 and 100</div>",rows: 1, columns: 3}],
+        on_finish: function(data){
+            data.trial = 'mem_gc'
+        }
     };
-    timeline.push(motInf_mem_gc);   
+    timeline.push(mem_gc);   
       
       
       
@@ -1314,7 +1446,7 @@ if(pros_q ==  "pro"){
 // ADDITIONAL QUESTIONS
       
 
-    var motInf_pressure = {
+    var pressure = {
         type: 'html-slider-response',
         min: 1,
         max: 7,
@@ -1322,8 +1454,11 @@ if(pros_q ==  "pro"){
         step: 1,
         stimulus: "<p>When asked about what you wanted in the study,<br> did you feel any personal or social pressure<br> to respond a certain way?<br></p><div class='flex-container'><div>Not at all</div><div>Very much so</div></div>",
         labels: [1,2,3,4,5,6,7],
+        on_finish: function(data){
+            data.trial = 'pressure'
+        }
     };
-    timeline.push(motInf_pressure);
+    timeline.push(pressure);
       
       
       
@@ -1338,6 +1473,9 @@ if(pros_q ==  "pro"){
         labels: ["1<br> <font size='-2'>Never</font>","2<br> <font size='-2'>A few</font>","3<br> <font size='-2'>More than a few</font>","4<br> <font size='-2'>Many</font>","5 <br><font size='-2'>Countless</font>"],
         slider_width: 400,
         prompt: "",
+        on_finish: function(data){
+            data.trial = 'DG_exp'
+        }
     };
     timeline.push(DG_exp); 
       
@@ -1351,6 +1489,9 @@ if(pros_q ==  "pro"){
         labels: ["1<br> <font size='-2'>Never</font>","2<br> <font size='-2'>A few</font>","3<br> <font size='-2'>More than a few</font>","4<br> <font size='-2'>Many</font>","5 <br><font size='-2'>Countless</font>"],
         slider_width: 400,
         prompt: "",
+        on_finish: function(data){
+            data.trial = 'GC_exp'
+        }
     };
     timeline.push(GC_exp); 
       
@@ -1365,6 +1506,9 @@ if(pros_q ==  "pro"){
         type: 'html-button-response',
         stimulus: 'Gender:<br>',
         choices: ['Male', 'Female','Other', 'Prefer not to say'],
+        on_finish: function(data){
+            data.trial = 'gen'
+        }
     };
     timeline.push(gen);  
       
@@ -1374,6 +1518,9 @@ if(pros_q ==  "pro"){
           questions: [
             {prompt: "Age:"}
           ],
+        on_finish: function(data){
+            data.trial = 'age'
+        }
         }; 
     timeline.push(age);
       
@@ -1381,6 +1528,9 @@ if(pros_q ==  "pro"){
         type: 'html-button-response',
         stimulus: 'Which category below most accurately describes you:<br>',
         choices: ['White', 'Hispanic, Latinx, or Spanish origin', 'Black or African American', 'Asian', 'American Indian or Alaska Native', 'Middle Eastern or North African', 'Native Hawaiian or Other Pacific Islander', 'Other', 'Prefer not to say'],
+        on_finish: function(data){
+            data.trial = 'race'
+        }
     };
     timeline.push(race); 
       
@@ -1389,6 +1539,9 @@ if(pros_q ==  "pro"){
         type: 'html-button-response',
         stimulus: 'Is English your first language?<br>',
         choices: ['Yes', 'No'],
+        on_finish: function(data){
+            data.trial = 'nativeEng'
+        }
     };
     timeline.push(nativeEng); 
       
@@ -1396,6 +1549,9 @@ if(pros_q ==  "pro"){
         type: 'html-button-response',
         stimulus: 'What is the highest level of education that you have completed?<br>',
         choices: ["Some high school","High school", "Some college", "2 year degree", "4 year degree", "Postgraduate/Professional degree/other", "Prefer not to say"],
+        on_finish: function(data){
+            data.trial = 'edu'
+        }
     };
     timeline.push(edu); 
       
@@ -1403,6 +1559,9 @@ if(pros_q ==  "pro"){
         type: 'html-button-response',
         stimulus: 'What was the total amount of income you earned during the last year?<br>',
         choices: ['Under $5,000', '$5,000 - $10,000', '$10,000 - $15,000', '$15,000 - $25,000', '$25,000 - $35,000', '$35,000 - $50,000', '$50,000 - $65,000', '$65,000 - $80,000', '$80,000 - $100,000', 'Over $100,000'],
+        on_finish: function(data){
+            data.trial = 'income'
+        }
     };
     timeline.push(income); 
     
@@ -1411,6 +1570,9 @@ if(pros_q ==  "pro"){
         type: 'html-button-response',
         stimulus: 'How reliable do you think Red Cross is as an organization in using donations for helping people?<br>',
         choices: ['Not at all reliable', 'Somewhat reliable','Very reliable'],
+        on_finish: function(data){
+            data.trial = 'charityOpinion'
+        }
     };
     timeline.push(charityOpinion); 
       
@@ -1425,11 +1587,14 @@ if(pros_q ==  "pro"){
           questions: [
             {prompt: "We asked you to report how much you wanted<br> one option over another using <b>colored bars</b>. We would <br>appreciate any feedback on your experience responding this way.<br><br> Please use this space to share any thoughts about this.",rows: 10, columns: 100}
           ],
+        on_finish: function(data){
+            data.trial = 'mtvScale'
+        }
         }; 
     timeline.push(mtvScale);
       
       
-    var motInf_believable = {
+    var believable = {
         type: 'html-slider-response',
         min: 1,
         max: 5,
@@ -1438,9 +1603,12 @@ if(pros_q ==  "pro"){
         stimulus: "<div class='longQ'><p>In today's study, you made choices involving various incentives including money for yourself or charity, and two gift cards for yourself. You were informed that for a subset of participants in this study, one of these choices really counts. <br><br><b>Did we communicate the fact that you could earn real money, gift cards, or money for charity, clearly and transparently enough in our instructions?</b><br><br>Please answer this question honestly and openly. This will help us to discover imperfections in our instructions.</p></div>",
         labels: ["1<br> <font size='-2'>No, not at all</font>",2,3,4,"5 <br><font size='-2'>Yes, fully</font>"],
         slider_width: 400,
-        prompt: ""
+        prompt: "",
+        on_finish: function(data){
+            data.trial = 'mofInf_believable'
+        }
     };
-    timeline.push(motInf_believable);
+    timeline.push(believable);
       
 
     var openSkeptic = {
@@ -1448,6 +1616,9 @@ if(pros_q ==  "pro"){
           questions: [
             {prompt: "<div class='longQ'>If anything was unclear or during the study you had other doubts or remarks about any part of our instructions, please let us know why:</div>",rows: 10, columns: 100}
           ],
+        on_finish: function(data){
+            data.trial = 'openSkeptic'
+        }
         }; 
     timeline.push(openSkeptic);
       
@@ -1456,6 +1627,9 @@ if(pros_q ==  "pro"){
           questions: [
             {prompt: "Apart from this, do you have any other remarks<br> or comments about today’s study?",rows: 10, columns: 100}
           ],
+        on_finish: function(data){
+            data.trial = 'finalWord'
+        }
         }; 
     timeline.push(finalWord);
       
@@ -1465,8 +1639,11 @@ if(pros_q ==  "pro"){
         questions: [
             {prompt: '<br><p><b>Please copy and paste your Prolific ID into the box below:</b>',
             name: 'prolific_id',
-            required: true}
-        ]
+            required: true},],
+        on_finish: function(data){
+            data.trial = 'prolific_id'
+        }
+        
     };
     timeline.push(prolific_id);
 
@@ -1474,7 +1651,10 @@ if(pros_q ==  "pro"){
     var conclusion = {
         type: 'html-button-response',
         stimulus: '<p>Please copy the link below <b>and click the FINISH button below</b>.</p><p>Then paste the link in your browser to recieve your payment.</p><p>Thank you.</p><p><b>' + platformLink + '</b></p>',
-        choices: ['CLICK HERE TO FINISH']
+        choices: ['CLICK HERE TO FINISH'],
+        on_finish: function(data){
+            data.trial = 'conclusiom'
+        }
     };
     timeline.push(conclusion);
       
