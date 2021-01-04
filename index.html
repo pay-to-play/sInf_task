@@ -769,212 +769,212 @@ if(pros_q ==  "pro"){
       
       
       
-      
-      
-      
-      
-      
-      
-      
-      
-      
-    if(loop_order == 'char') {
-        
-        
-   
-//CHAR FIRST
-        for (j = 0; j < degrade_n; j++) {
-            if(j < 26) {
-                var char_half1 = {
-                    type: 'html-button-response',
-                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_char_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_char_Stim+'"></div></div>'],
-                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(first[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(first[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
-                    margin_horizontal: '100px',
-                    button_html: '<button class="choice-button">%choice%</button>',
-                };
-                timeline.push(char_half1);
-                timeline.push(fixation);
-            };
-
-            
-            if(j == catchIndex) {
-                var catchTrial = {
-                    type: 'html-button-response',
-                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+youColor_pic+'"></div>'+'<div id="rightStim"><img src="img/'+youColor_pic+'"></div></div>'],
-                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ "50.00" + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+ "0.00" + '</div></div>'],
-                    margin_horizontal: '100px',
-                    button_html: '<button class="choice-button">%choice%</button>',
-                    on_finish: function(data) {
-                        data.catchIndex = catchIndex}
-                    };
-                    timeline.push(catchTrial);
-                    timeline.push(fixation);
-                };
-
-              if(j >= 26) {
-                var char_half2 = {
-                    type: 'html-button-response',
-                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_char_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_char_Stim+'"></div></div>'],
-                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(second[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(second[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
-                    margin_horizontal: '100px',
-                    button_html: '<button class="choice-button">%choice%</button>',
-                };
-                timeline.push(char_half2);
-                timeline.push(fixation);
-            };};
-        
-            /* define instructions trial */
-            var nextTask = {
-              type: "instructions",
-              pages: ['<p>You have completed the first set of choices. Half way there! Press continue to proceed to the new set of choices when ready.</p>'],
-            show_clickable_nav: true
-            };
-                timeline.push(nextTask);   
-        
-        
-//GC SECOND
-        for (j = 0; j < degrade_n; j++) {
-
-            if(j < 26) {
-                var gc_half1 = {
-                    type: 'html-button-response',
-                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_gc_Stim+'"></div></div>'],
-                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(first[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(first[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
-                    margin_horizontal: '100px',
-                    button_html: '<button class="choice-button">%choice%</button>',
-                };
-                timeline.push(gc_half1);
-                timeline.push(fixation);};
-                  
-            if(j == catchIndex) {
-                var catchTrial = {
-                    type: 'html-button-response',
-                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+left_gc_Stim+'"></div></div>'],
-                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ "50.00" + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+ "0.00" + '</div></div>'],
-                    margin_horizontal: '100px',
-                    button_html: '<button class="choice-button">%choice%</button>',
-                    on_finish: function(data) {
-                        data.catchIndex = catchIndex}
-                    };
-                    timeline.push(catchTrial);
-                    timeline.push(fixation);
-                };
-
-              if(j >= 26) {
-                var gc_half2 = {
-                    type: 'html-button-response',
-                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_gc_Stim+'"></div></div>'],
-                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(second[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(second[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
-                    margin_horizontal: '100px',
-                    button_html: '<button class="choice-button">%choice%</button>',
-                };
-                timeline.push(gc_half2);
-                timeline.push(fixation);
-            };}
-
-        
-    } else {
-            
-//GC FIRST
-        for (j = 0; j < degrade_n; j++) {
-            if(j < 26) {
-                var gc_half1 = {
-                    type: 'html-button-response',
-                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_gc_Stim+'"></div></div>'],
-                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(first[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(first[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
-                    margin_horizontal: '100px',
-                    button_html: '<button class="choice-button">%choice%</button>',
-                };
-                timeline.push(gc_half1);
-                timeline.push(fixation);
-            };
-
-            
-            if(j == catchIndex) {
-                var catchTrial = {
-                    type: 'html-button-response',
-                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+left_gc_Stim+'"></div></div>'],
-                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ "50.00" + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+ "0.00" + '</div></div>'],
-                    margin_horizontal: '100px',
-                    button_html: '<button class="choice-button">%choice%</button>',
-                    on_finish: function(data) {
-                        data.catchIndex = catchIndex}
-                    };
-                    timeline.push(catchTrial);
-                    timeline.push(fixation);
-                };
-
-              if(j >= 26) {
-                var gc_half2 = {
-                    type: 'html-button-response',
-                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_gc_Stim+'"></div></div>'],
-                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(second[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(second[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
-                    margin_horizontal: '100px',
-                    button_html: '<button class="choice-button">%choice%</button>',
-                };
-                timeline.push(gc_half2);
-                timeline.push(fixation);
-            };};
-        
-            
-            /* define instructions trial */
-            var nextTask = {
-              type: "instructions",
-              pages: ['<div class="instructions"><p>You have completed the first set of choices. Half way there! <br> Press continue to proceed to the new set of choices when you are ready.</p>'],
-            show_clickable_nav: true
-            };
-                timeline.push(nextTask);   
-            
-//CHAR SECOND 
-        for (j = 0; j < degrade_n; j++) {
-
-                if(j < 26) {
-                    var char_half1 = {
-                        type: 'html-button-response',
-                        stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_char_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_char_Stim+'"></div></div>'],
-                        choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(first[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(first[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
-                        margin_horizontal: '100px',
-                        button_html: '<button class="choice-button">%choice%</button>',
-                    };
-                    timeline.push(char_half1);
-                    timeline.push(fixation);
-                };
-
-            
-            if(j == catchIndex) {
-                var catchTrial = {
-                    type: 'html-button-response',
-                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+youColor_pic+'"></div>'+'<div id="rightStim"><img src="img/'+youColor_pic+'"></div></div>'],
-                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ "50.00" + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+ "0.00" + '</div></div>'],
-                    margin_horizontal: '100px',
-                    button_html: '<button class="choice-button">%choice%</button>',
-                    on_finish: function(data) {
-                        data.catchIndex = catchIndex}
-                    };
-                    timeline.push(catchTrial);
-                    timeline.push(fixation);
-                };
-
-                  if(j >= 26) {
-                    var char_half2 = {
-                        type: 'html-button-response',
-                        stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_char_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_char_Stim+'"></div></div>'],
-                        choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(second[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(second[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
-                        margin_horizontal: '100px',
-                        button_html: '<button class="choice-button">%choice%</button>',
-                    };
-                    timeline.push(char_half2);
-                    timeline.push(fixation);
-                };};      
-        };
-         
-
-      
-  
-      
-      
-      
-      
+//      
+//      
+//      
+//      
+//      
+//      
+//      
+//      
+//      
+//    if(loop_order == 'char') {
+//        
+//        
+//   
+////CHAR FIRST
+//        for (j = 0; j < degrade_n; j++) {
+//            if(j < 26) {
+//                var char_half1 = {
+//                    type: 'html-button-response',
+//                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_char_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_char_Stim+'"></div></div>'],
+//                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(first[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(first[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+//                    margin_horizontal: '100px',
+//                    button_html: '<button class="choice-button">%choice%</button>',
+//                };
+//                timeline.push(char_half1);
+//                timeline.push(fixation);
+//            };
+//
+//            
+//            if(j == catchIndex) {
+//                var catchTrial = {
+//                    type: 'html-button-response',
+//                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+youColor_pic+'"></div>'+'<div id="rightStim"><img src="img/'+youColor_pic+'"></div></div>'],
+//                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ "50.00" + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+ "0.00" + '</div></div>'],
+//                    margin_horizontal: '100px',
+//                    button_html: '<button class="choice-button">%choice%</button>',
+//                    on_finish: function(data) {
+//                        data.catchIndex = catchIndex}
+//                    };
+//                    timeline.push(catchTrial);
+//                    timeline.push(fixation);
+//                };
+//
+//              if(j >= 26) {
+//                var char_half2 = {
+//                    type: 'html-button-response',
+//                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_char_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_char_Stim+'"></div></div>'],
+//                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(second[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(second[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+//                    margin_horizontal: '100px',
+//                    button_html: '<button class="choice-button">%choice%</button>',
+//                };
+//                timeline.push(char_half2);
+//                timeline.push(fixation);
+//            };};
+//        
+//            /* define instructions trial */
+//            var nextTask = {
+//              type: "instructions",
+//              pages: ['<p>You have completed the first set of choices. Half way there! Press continue to proceed to the new set of choices when ready.</p>'],
+//            show_clickable_nav: true
+//            };
+//                timeline.push(nextTask);   
+//        
+//        
+////GC SECOND
+//        for (j = 0; j < degrade_n; j++) {
+//
+//            if(j < 26) {
+//                var gc_half1 = {
+//                    type: 'html-button-response',
+//                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_gc_Stim+'"></div></div>'],
+//                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(first[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(first[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+//                    margin_horizontal: '100px',
+//                    button_html: '<button class="choice-button">%choice%</button>',
+//                };
+//                timeline.push(gc_half1);
+//                timeline.push(fixation);};
+//                  
+//            if(j == catchIndex) {
+//                var catchTrial = {
+//                    type: 'html-button-response',
+//                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+left_gc_Stim+'"></div></div>'],
+//                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ "50.00" + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+ "0.00" + '</div></div>'],
+//                    margin_horizontal: '100px',
+//                    button_html: '<button class="choice-button">%choice%</button>',
+//                    on_finish: function(data) {
+//                        data.catchIndex = catchIndex}
+//                    };
+//                    timeline.push(catchTrial);
+//                    timeline.push(fixation);
+//                };
+//
+//              if(j >= 26) {
+//                var gc_half2 = {
+//                    type: 'html-button-response',
+//                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_gc_Stim+'"></div></div>'],
+//                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(second[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(second[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+//                    margin_horizontal: '100px',
+//                    button_html: '<button class="choice-button">%choice%</button>',
+//                };
+//                timeline.push(gc_half2);
+//                timeline.push(fixation);
+//            };}
+//
+//        
+//    } else {
+//            
+////GC FIRST
+//        for (j = 0; j < degrade_n; j++) {
+//            if(j < 26) {
+//                var gc_half1 = {
+//                    type: 'html-button-response',
+//                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_gc_Stim+'"></div></div>'],
+//                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(first[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(first[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+//                    margin_horizontal: '100px',
+//                    button_html: '<button class="choice-button">%choice%</button>',
+//                };
+//                timeline.push(gc_half1);
+//                timeline.push(fixation);
+//            };
+//
+//            
+//            if(j == catchIndex) {
+//                var catchTrial = {
+//                    type: 'html-button-response',
+//                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+left_gc_Stim+'"></div></div>'],
+//                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ "50.00" + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+ "0.00" + '</div></div>'],
+//                    margin_horizontal: '100px',
+//                    button_html: '<button class="choice-button">%choice%</button>',
+//                    on_finish: function(data) {
+//                        data.catchIndex = catchIndex}
+//                    };
+//                    timeline.push(catchTrial);
+//                    timeline.push(fixation);
+//                };
+//
+//              if(j >= 26) {
+//                var gc_half2 = {
+//                    type: 'html-button-response',
+//                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_gc_Stim+'"></div></div>'],
+//                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(second[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(second[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+//                    margin_horizontal: '100px',
+//                    button_html: '<button class="choice-button">%choice%</button>',
+//                };
+//                timeline.push(gc_half2);
+//                timeline.push(fixation);
+//            };};
+//        
+//            
+//            /* define instructions trial */
+//            var nextTask = {
+//              type: "instructions",
+//              pages: ['<div class="instructions"><p>You have completed the first set of choices. Half way there! <br> Press continue to proceed to the new set of choices when you are ready.</p>'],
+//            show_clickable_nav: true
+//            };
+//                timeline.push(nextTask);   
+//            
+////CHAR SECOND 
+//        for (j = 0; j < degrade_n; j++) {
+//
+//                if(j < 26) {
+//                    var char_half1 = {
+//                        type: 'html-button-response',
+//                        stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_char_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_char_Stim+'"></div></div>'],
+//                        choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(first[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(first[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+//                        margin_horizontal: '100px',
+//                        button_html: '<button class="choice-button">%choice%</button>',
+//                    };
+//                    timeline.push(char_half1);
+//                    timeline.push(fixation);
+//                };
+//
+//            
+//            if(j == catchIndex) {
+//                var catchTrial = {
+//                    type: 'html-button-response',
+//                    stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+youColor_pic+'"></div>'+'<div id="rightStim"><img src="img/'+youColor_pic+'"></div></div>'],
+//                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ "50.00" + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+ "0.00" + '</div></div>'],
+//                    margin_horizontal: '100px',
+//                    button_html: '<button class="choice-button">%choice%</button>',
+//                    on_finish: function(data) {
+//                        data.catchIndex = catchIndex}
+//                    };
+//                    timeline.push(catchTrial);
+//                    timeline.push(fixation);
+//                };
+//
+//                  if(j >= 26) {
+//                    var char_half2 = {
+//                        type: 'html-button-response',
+//                        stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_char_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_char_Stim+'"></div></div>'],
+//                        choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(second[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(second[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+//                        margin_horizontal: '100px',
+//                        button_html: '<button class="choice-button">%choice%</button>',
+//                    };
+//                    timeline.push(char_half2);
+//                    timeline.push(fixation);
+//                };};      
+//        };
+//         
+//
+//      
+//  
+//      
+//      
+//      
+//      
       
       
       
