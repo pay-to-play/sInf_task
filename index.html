@@ -480,8 +480,8 @@ timeline.push(attncheck_fb);
     };
       
       
-    var loop_position = jsPsych.randomization.sampleWithoutReplacement(["left_self","right_self"], 1)[0];
-    if(loop_position == 'left_self') {
+    var loop_position = jsPsych.randomization.sampleWithoutReplacement(["left_self_BB","right_self_BB"], 1)[0];
+    if(loop_position == 'left_self_BB') {
         var leftNum = 0
         
             var left_char = 'yourself'
@@ -763,11 +763,11 @@ if(pros_q ==  "pro"){
     
     const pairs1_right = [20.00, 36.00, 6.00, 38.38, 9.55, 32.86, 7.14, 29.54, 7.42, 42.42, 18.18, 22.91, 7.59, 28.94, 15.00, 27.42, 11.58, 34.39, 6.91, 34.50, 7.67, 32.76, 13.61, 37.71, 27.00, 7.50, 31.67, 15.38, 37.50, 10.25, 34.76, 10.65, 37.15, 15.33, 36.78, 18.75, 36.11, 7.41, 28.89, 10.00, 29.56, 13.82, 37.48, 13.44, 30.00, 7.10, 10.42, 8.60, 39.66, 8.85, 38.64];
       
-        // identical to above (for this exp.)
+        // identical to above (not needed for this exp.)
      
-    const pairs2_left = [20.00, 9.00, 36.00, 6.62, 32.45, 7.14, 32.86, 18.46, 41.58, 7.58, 21.82, 19.09, 36.41, 12.06, 27.00, 19.58, 32.42, 6.61, 40.09, 11.50, 38.33, 10.24, 35.39, 6.29, 15.00, 40.50, 8.33, 24.62, 7.50, 30.75, 7.24, 38.35, 8.85, 30.67, 10.22, 26.25, 12.89, 32.59, 11.11, 32.00, 13.44, 33.18, 8.52, 29.56, 15.00, 36.90, 39.58, 34.40, 7.34, 37.15, 11.36];
-    
-    const pairs2_right = [20.00, 36.00, 6.00, 38.38, 9.55, 32.86, 7.14, 29.54, 7.42, 42.42, 18.18, 22.91, 7.59, 28.94, 15.00, 27.42, 11.58, 34.39, 6.91, 34.50, 7.67, 32.76, 13.61, 37.71, 27.00, 7.50, 31.67, 15.38, 37.50, 10.25, 34.76, 10.65, 37.15, 15.33, 36.78, 18.75, 36.11, 7.41, 28.89, 10.00, 29.56, 13.82, 37.48, 13.44, 30.00, 7.10, 10.42, 8.60, 39.66, 8.85, 38.64];
+//    const pairs2_left = [20.00, 9.00, 36.00, 6.62, 32.45, 7.14, 32.86, 18.46, 41.58, 7.58, 21.82, 19.09, 36.41, 12.06, 27.00, 19.58, 32.42, 6.61, 40.09, 11.50, 38.33, 10.24, 35.39, 6.29, 15.00, 40.50, 8.33, 24.62, 7.50, 30.75, 7.24, 38.35, 8.85, 30.67, 10.22, 26.25, 12.89, 32.59, 11.11, 32.00, 13.44, 33.18, 8.52, 29.56, 15.00, 36.90, 39.58, 34.40, 7.34, 37.15, 11.36];
+//    
+//    const pairs2_right = [20.00, 36.00, 6.00, 38.38, 9.55, 32.86, 7.14, 29.54, 7.42, 42.42, 18.18, 22.91, 7.59, 28.94, 15.00, 27.42, 11.58, 34.39, 6.91, 34.50, 7.67, 32.76, 13.61, 37.71, 27.00, 7.50, 31.67, 15.38, 37.50, 10.25, 34.76, 10.65, 37.15, 15.33, 36.78, 18.75, 36.11, 7.41, 28.89, 10.00, 29.56, 13.82, 37.48, 13.44, 30.00, 7.10, 10.42, 8.60, 39.66, 8.85, 38.64];
       
       
     // Randomize choice options based on randomorder
@@ -778,22 +778,22 @@ if(pros_q ==  "pro"){
         var option_pairs1 = [option_pairs1_left,option_pairs1_right]  
       
       
-    const option_pairs2_left = random_order.map(i => pairs2_left[i]);
-    const option_pairs2_right = random_order.map(i => pairs2_right[i]);
-      
-        var option_pairs2 = [option_pairs1_left,option_pairs2_right]  
+//    const option_pairs2_left = random_order.map(i => pairs2_left[i]);
+//    const option_pairs2_right = random_order.map(i => pairs2_right[i]);
+//      
+//        var option_pairs2 = [option_pairs1_left,option_pairs2_right]  
     
     
     // Assign a loop order variable for which block comes first
       
     var loop_order = jsPsych.randomization.sampleWithoutReplacement(["char","gc"], 1)[0];
-    if(loop_order == 'char') {
-        var first = option_pairs1
-        var second = option_pairs2
-    } else {
-        var first = option_pairs2
-        var second = option_pairs1
-    };
+//    if(loop_order == 'char') {
+//        var first = option_pairs1
+//        var second = option_pairs2
+//    } else {
+//        var first = option_pairs2
+//        var second = option_pairs1
+//    };
 
       
       
@@ -863,15 +863,15 @@ if(pros_q ==  "pro"){
                 var char_half1 = {
                     type: 'html-button-response',
                     stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_char_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_char_Stim+'"></div></div>'],
-                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(first[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(first[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(option_pairs1[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(option_pairs1[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
                     margin_horizontal: '100px',
                     button_html: '<button class="choice-button">%choice%</button>',
                     on_finish: function(data){
                         data.trial = 'char_half1',
                         data.optionL = left_char_Stim,
                         data.optionR = right_char_Stim,
-                        data.valueL = leftNum[j],
-                        data.valueR = rightNum[j]
+                        data.valueL = option_pairs1[leftNum][j],
+                        data.valueR = option_pairs1[rightNum][j]
                     }
                 };
                 timeline.push(char_half1);
@@ -898,15 +898,15 @@ if(pros_q ==  "pro"){
                 var char_half2 = {
                     type: 'html-button-response',
                     stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_char_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_char_Stim+'"></div></div>'],
-                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(second[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(second[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(option_pairs1[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(option_pairs1[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
                     margin_horizontal: '100px',
                     button_html: '<button class="choice-button">%choice%</button>',
                     on_finish: function(data){
                         data.trial = 'char_half2',
                         data.optionL = left_char_Stim,
                         data.optionR = right_char_Stim,
-                        data.valueL = leftNum[j],
-                        data.valueR = rightNum[j]
+                        data.valueL = option_pairs1[leftNum][j],
+                        data.valueR = option_pairs1[rightNum][j]
                     }
                 };
                 timeline.push(char_half2);
@@ -932,15 +932,15 @@ if(pros_q ==  "pro"){
                 var gc_half1 = {
                     type: 'html-button-response',
                     stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_gc_Stim+'"></div></div>'],
-                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(first[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(first[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(option_pairs1[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(option_pairs1[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
                     margin_horizontal: '100px',
                     button_html: '<button class="choice-button">%choice%</button>',
                     on_finish: function(data){
                         data.trial = 'gc_half1',
                         data.optionL = left_gc_Stim,
                         data.optionR = right_gc_Stim,
-                        data.valueL = leftNum[j],
-                        data.valueR = rightNum[j]
+                        data.valueL = option_pairs1[leftNum][j],
+                        data.valueR = option_pairs1[rightNum][j]
                     }
                 };
                 timeline.push(gc_half1);
@@ -965,15 +965,15 @@ if(pros_q ==  "pro"){
                 var gc_half2 = {
                     type: 'html-button-response',
                     stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_gc_Stim+'"></div></div>'],
-                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(second[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(second[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(option_pairs1[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(option_pairs1[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
                     margin_horizontal: '100px',
                     button_html: '<button class="choice-button">%choice%</button>',
                     on_finish: function(data){
                         data.trial = 'gc_half2',
                         data.optionL = left_gc_Stim,
                         data.optionR = right_gc_Stim,
-                        data.valueL = leftNum[j],
-                        data.valueR = rightNum[j]
+                        data.valueL = option_pairs1[leftNum][j],
+                        data.valueR = option_pairs1[rightNum][j]
                     }
                 };
                 timeline.push(gc_half2);
@@ -989,11 +989,15 @@ if(pros_q ==  "pro"){
                 var gc_half1 = {
                     type: 'html-button-response',
                     stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_gc_Stim+'"></div></div>'],
-                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(first[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(first[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(option_pairs1[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(option_pairs1[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
                     margin_horizontal: '100px',
                     button_html: '<button class="choice-button">%choice%</button>',
                     on_finish: function(data){
-                        data.trial = 'gc_half1'
+                        data.trial = 'gc_half1',
+                        data.optionL = left_gc_Stim,
+                        data.optionR = right_gc_Stim,
+                        data.valueL = option_pairs1[leftNum][j],
+                        data.valueR = option_pairs1[rightNum][j]
                     }
                 };
                 timeline.push(gc_half1);
@@ -1020,11 +1024,15 @@ if(pros_q ==  "pro"){
                 var gc_half2 = {
                     type: 'html-button-response',
                     stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_gc_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_gc_Stim+'"></div></div>'],
-                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(second[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(second[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+                    choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(option_pairs1[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(option_pairs1[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
                     margin_horizontal: '100px',
                     button_html: '<button class="choice-button">%choice%</button>',
                     on_finish: function(data){
-                        data.trial = 'gc_half2'
+                        data.trial = 'gc_half2',
+                        data.optionL = left_gc_Stim,
+                        data.optionR = right_gc_Stim,
+                        data.valueL = option_pairs1[leftNum][j],
+                        data.valueR = option_pairs1[rightNum][j]
                     }
                 };
                 timeline.push(gc_half2);
@@ -1050,11 +1058,15 @@ if(pros_q ==  "pro"){
                     var char_half1 = {
                         type: 'html-button-response',
                         stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_char_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_char_Stim+'"></div></div>'],
-                        choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(first[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(first[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+                        choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(option_pairs1[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(option_pairs1[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
                         margin_horizontal: '100px',
                         button_html: '<button class="choice-button">%choice%</button>',
                         on_finish: function(data){
-                            data.trial = 'char_half1'
+                            data.trial = 'char_half1',
+                            data.optionL = left_char_Stim,
+                            data.optionR = right_char_Stim,
+                            data.valueL = option_pairs1[leftNum][j],
+                            data.valueR = option_pairs1[rightNum][j]
                         }
                     };
                     timeline.push(char_half1);
@@ -1081,11 +1093,15 @@ if(pros_q ==  "pro"){
                     var char_half2 = {
                         type: 'html-button-response',
                         stimulus: ['<div id="wrapper"><div id="leftStim"><img src="img/'+left_char_Stim+'"></div>'+'<div id="rightStim"><img src="img/'+right_char_Stim+'"></div></div>'],
-                        choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(second[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(second[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
+                        choices: ['<div id="wrapper"><div id="leftNumStyle">'+ (Math.round(option_pairs1[leftNum][j] * 100) / 100).toFixed(2) + '</div></div>', '<div id="wrapper"><div id="rightNumStyle">'+(Math.round(option_pairs1[rightNum][j] * 100) / 100).toFixed(2) + '</div></div>'],
                         margin_horizontal: '100px',
                         button_html: '<button class="choice-button">%choice%</button>',
                         on_finish: function(data){
-                            data.trial = 'char_half2'
+                            data.trial = 'char_half2',
+                            data.optionL = left_char_Stim,
+                            data.optionR = right_char_Stim,
+                            data.valueL = option_pairs1[leftNum][j],
+                            data.valueR = option_pairs1[rightNum][j]
                         }
                     };
                     timeline.push(char_half2);
@@ -1662,7 +1678,7 @@ if(pros_q ==  "pro"){
         slider_width: 400,
         prompt: "",
         on_finish: function(data){
-            data.trial = 'mofInf_believable'
+            data.trial = 'believable'
         }
     };
     timeline.push(believable);
