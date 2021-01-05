@@ -168,27 +168,27 @@
 /* create timeline */
 var timeline = []; 
  
-      
-//Function to check whether consent has been given
-var check_consent = function(elem) {
-        if (document.getElementById('consent_checkbox').checked) {
-            return true;
-        }
-        else {
-            alert("If you wish to participate, you must check the box next to the statement 'I agree to participate in this study.'");
-            return false;
-        }
-        return false;
-    };
-
-//Presents external consent page to participants
-    var consent = {
-            type:'external-html',
-            url: "consent.html",
-            cont_btn: "start",
-            check_fn: check_consent
-        };
-        timeline.push(consent);
+//      
+////Function to check whether consent has been given
+//var check_consent = function(elem) {
+//        if (document.getElementById('consent_checkbox').checked) {
+//            return true;
+//        }
+//        else {
+//            alert("If you wish to participate, you must check the box next to the statement 'I agree to participate in this study.'");
+//            return false;
+//        }
+//        return false;
+//    };
+//
+////Presents external consent page to participants
+//    var consent = {
+//            type:'external-html',
+//            url: "consent.html",
+//            cont_btn: "start",
+//            check_fn: check_consent
+//        };
+//        timeline.push(consent);
       
       
       
@@ -1714,7 +1714,7 @@ if(pros_q ==  "pro"){
     var prolific_id = {
         type: 'survey-text',
         questions: [
-            {prompt: '<br><p><b>Thanks for participating! Please copy and paste your Prolific ID into the box below to complete the study:</b>',
+            {prompt: '<br><p><b>Please copy and paste your Prolific ID into the box below:</b>',
             name: 'prolific_id',
             required: true},],
         on_finish: function(data){
@@ -1727,8 +1727,8 @@ if(pros_q ==  "pro"){
     var platformLink = 'https://app.prolific.co/submissions/complete?cc=1E12AFFE';
     var conclusion = {
         type: 'html-button-response',
-        stimulus: '<p>Please <b>first</b> copy the link below <b>and then click the FINISH button below</b>.</p><p>Then paste the link in your browser to recieve your payment.</p><p>Thank you.</p><p><b>' + platformLink + '</b></p>',
-        choices: ['CLICK HERE TO FINISH'],
+        stimulus: '<p>To complete the study, copy the link below <b>and then click the FINISH button</b>.</p><p>Then paste the link in your browser to recieve your payment. Thank you!</p><p><b>'+platformLink+'</b></p><br>',
+        choices: ['<font size="+2"><b>FINISH</b></font>'],
         on_finish: function(data){
             data.trial = 'conclusiom'
         }
