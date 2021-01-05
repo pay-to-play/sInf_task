@@ -832,6 +832,7 @@ if(pros_q ==  "pro"){
     trial_duration: function(){ return jsPsych.randomization.sampleWithoutReplacement(ITI, 1)[0]; },
         on_finish: function(data){
             data.trial = 'fixation'
+            data.trial_duration = trial_duration
         }
     };
     timeline.push(fixation);  
@@ -867,7 +868,8 @@ if(pros_q ==  "pro"){
                         data.optionL = left_char_Stim,
                         data.optionR = right_char_Stim,
                         data.valueL = option_pairs[leftNum][j],
-                        data.valueR = option_pairs[rightNum][j]
+                        data.valueR = option_pairs[rightNum][j],
+                        data.trialNum = j
                     }
                 };
                 timeline.push(char_half1);
@@ -902,7 +904,8 @@ if(pros_q ==  "pro"){
                         data.optionL = left_char_Stim,
                         data.optionR = right_char_Stim,
                         data.valueL = option_pairs[leftNum][j],
-                        data.valueR = option_pairs[rightNum][j]
+                        data.valueR = option_pairs[rightNum][j],
+                        data.trialNum = j
                     }
                 };
                 timeline.push(char_half2);
@@ -936,7 +939,8 @@ if(pros_q ==  "pro"){
                         data.optionL = left_gc_Stim,
                         data.optionR = right_gc_Stim,
                         data.valueL = option_pairs[leftNum][j],
-                        data.valueR = option_pairs[rightNum][j]
+                        data.valueR = option_pairs[rightNum][j],
+                        data.trialNum = j
                     }
                 };
                 timeline.push(gc_half1);
@@ -969,7 +973,8 @@ if(pros_q ==  "pro"){
                         data.optionL = left_gc_Stim,
                         data.optionR = right_gc_Stim,
                         data.valueL = option_pairs[leftNum][j],
-                        data.valueR = option_pairs[rightNum][j]
+                        data.valueR = option_pairs[rightNum][j],
+                        data.trialNum = j
                     }
                 };
                 timeline.push(gc_half2);
@@ -993,7 +998,8 @@ if(pros_q ==  "pro"){
                         data.optionL = left_gc_Stim,
                         data.optionR = right_gc_Stim,
                         data.valueL = option_pairs[leftNum][j],
-                        data.valueR = option_pairs[rightNum][j]
+                        data.valueR = option_pairs[rightNum][j],
+                        data.trialNum = j
                     }
                 };
                 timeline.push(gc_half1);
@@ -1028,7 +1034,8 @@ if(pros_q ==  "pro"){
                         data.optionL = left_gc_Stim,
                         data.optionR = right_gc_Stim,
                         data.valueL = option_pairs[leftNum][j],
-                        data.valueR = option_pairs[rightNum][j]
+                        data.valueR = option_pairs[rightNum][j],
+                        data.trialNum = j
                     }
                 };
                 timeline.push(gc_half2);
@@ -1062,7 +1069,8 @@ if(pros_q ==  "pro"){
                             data.optionL = left_char_Stim,
                             data.optionR = right_char_Stim,
                             data.valueL = option_pairs[leftNum][j],
-                            data.valueR = option_pairs[rightNum][j]
+                            data.valueR = option_pairs[rightNum][j],
+                            data.trialNum = j
                         }
                     };
                     timeline.push(char_half1);
@@ -1097,7 +1105,8 @@ if(pros_q ==  "pro"){
                             data.optionL = left_char_Stim,
                             data.optionR = right_char_Stim,
                             data.valueL = option_pairs[leftNum][j],
-                            data.valueR = option_pairs[rightNum][j]
+                            data.valueR = option_pairs[rightNum][j],
+                            data.trialNum = j
                         }
                     };
                     timeline.push(char_half2);
