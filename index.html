@@ -796,7 +796,7 @@ if(pros_q ==  "pro"){
 // NEED TO SAVE CONTENTS OF ALL LOOPS
       
      
-    var choice_set = 50; // (51 choice pairs, 0-50 in forloop)
+    var choice_set = 51; 
     var j;
       
       
@@ -864,10 +864,7 @@ if(pros_q ==  "pro"){
                     on_finish: function(data){
                         data.trial = 'char_half1',
                         data.optionL = left_char_Stim,
-                        data.optionR = right_char_Stim,
-                        data.valueL = option_pairs[leftNum][j],
-                        data.valueR = option_pairs[rightNum][j],
-                        data.trialNum = j
+                        data.optionR = right_char_Stim
                     }
                 };
                 timeline.push(char_half1);
@@ -900,10 +897,7 @@ if(pros_q ==  "pro"){
                     on_finish: function(data){
                         data.trial = 'char_half2',
                         data.optionL = left_char_Stim,
-                        data.optionR = right_char_Stim,
-                        data.valueL = option_pairs[leftNum][j],
-                        data.valueR = option_pairs[rightNum][j],
-                        data.trialNum = j
+                        data.optionR = right_char_Stim
                     }
                 };
                 timeline.push(char_half2);
@@ -935,10 +929,7 @@ if(pros_q ==  "pro"){
                     on_finish: function(data){
                         data.trial = 'gc_half1',
                         data.optionL = left_gc_Stim,
-                        data.optionR = right_gc_Stim,
-                        data.valueL = option_pairs[leftNum][j],
-                        data.valueR = option_pairs[rightNum][j],
-                        data.trialNum = j
+                        data.optionR = right_gc_Stim
                     }
                 };
                 timeline.push(gc_half1);
@@ -969,10 +960,7 @@ if(pros_q ==  "pro"){
                     on_finish: function(data){
                         data.trial = 'gc_half2',
                         data.optionL = left_gc_Stim,
-                        data.optionR = right_gc_Stim,
-                        data.valueL = option_pairs[leftNum][j],
-                        data.valueR = option_pairs[rightNum][j],
-                        data.trialNum = j
+                        data.optionR = right_gc_Stim
                     }
                 };
                 timeline.push(gc_half2);
@@ -994,10 +982,7 @@ if(pros_q ==  "pro"){
                     on_finish: function(data){
                         data.trial = 'gc_half1',
                         data.optionL = left_gc_Stim,
-                        data.optionR = right_gc_Stim,
-                        data.valueL = option_pairs[leftNum][j],
-                        data.valueR = option_pairs[rightNum][j],
-                        data.trialNum = j
+                        data.optionR = right_gc_Stim
                     }
                 };
                 timeline.push(gc_half1);
@@ -1030,10 +1015,7 @@ if(pros_q ==  "pro"){
                     on_finish: function(data){
                         data.trial = 'gc_half2',
                         data.optionL = left_gc_Stim,
-                        data.optionR = right_gc_Stim,
-                        data.valueL = option_pairs[leftNum][j],
-                        data.valueR = option_pairs[rightNum][j],
-                        data.trialNum = j
+                        data.optionR = right_gc_Stim
                     }
                 };
                 timeline.push(gc_half2);
@@ -1065,10 +1047,7 @@ if(pros_q ==  "pro"){
                         on_finish: function(data){
                             data.trial = 'char_half1',
                             data.optionL = left_char_Stim,
-                            data.optionR = right_char_Stim,
-                            data.valueL = option_pairs[leftNum][j],
-                            data.valueR = option_pairs[rightNum][j],
-                            data.trialNum = j
+                            data.optionR = right_char_Stim
                         }
                     };
                     timeline.push(char_half1);
@@ -1101,10 +1080,7 @@ if(pros_q ==  "pro"){
                         on_finish: function(data){
                             data.trial = 'char_half2',
                             data.optionL = left_char_Stim,
-                            data.optionR = right_char_Stim,
-                            data.valueL = option_pairs[leftNum][j],
-                            data.valueR = option_pairs[rightNum][j],
-                            data.trialNum = j
+                            data.optionR = right_char_Stim
                         }
                     };
                     timeline.push(char_half2);
@@ -1729,7 +1705,7 @@ if(pros_q ==  "pro"){
         stimulus: '<p>To complete the study, copy the link below <b>and then click the FINISH button</b>.</p><p>Then paste the link in your browser to recieve your payment. Thank you!</p><p><b>'+platformLink+'</b></p><br>',
         choices: ['<font size="+2"><b>FINISH</b></font>'],
         on_finish: function(data){
-            data.trial = 'conclusiom'
+            data.trial = 'conclusion'
         }
     };
     timeline.push(conclusion);
