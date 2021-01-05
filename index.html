@@ -1758,18 +1758,18 @@ if(pros_q ==  "pro"){
       
 // WRITE TO DATABASE
       
-      //no redirect {uncomment last trial too}
-        jsPsych.init({
-            timeline: timeline, 
-            preload_images: images,
-            show_preload_progress_bar: false,
-            on_finish: function() {
-//            jsPsych.data.displayData();
-                firebase.database().ref(firebase.auth().currentUser.uid).set({
-                    data: jsPsych.data.get().values()
-                })
-            }
-        });
+//      //no redirect {uncomment last trial too}
+//        jsPsych.init({
+//            timeline: timeline, 
+//            preload_images: images,
+//            show_preload_progress_bar: false,
+//            on_finish: function() {
+////            jsPsych.data.displayData();
+//                firebase.database().ref(firebase.auth().currentUser.uid).set({
+//                    data: jsPsych.data.get().values()
+//                })
+//            }
+//        });
       
       //with redirect
         jsPsych.init({
