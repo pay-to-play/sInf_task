@@ -796,7 +796,7 @@ if(pros_q ==  "pro"){
 // NEED TO SAVE CONTENTS OF ALL LOOPS
       
      
-    var choice_set = 5; 
+    var choice_set = 51; 
     var j;
       
       
@@ -1699,18 +1699,18 @@ if(pros_q ==  "pro"){
     };
     timeline.push(prolific_id);
 
-//      
-//    var platformLink = 'https://app.prolific.co/submissions/complete?cc=1E12AFFE';
-//    var conclusion = {
-//        type: 'html-button-response',
-//        stimulus: '<p>To complete the study, copy the link below <b>and then click the FINISH button</b>.</p><p>Then paste the link in your browser to recieve your payment. Thank you!</p><p><b>'+platformLink+'</b></p><br>',
-//        choices: ['<font size="+2"><b>FINISH</b></font>'],
-//        on_finish: function(data){
-//            data.trial = 'conclusion'
-//        }
-//    };
-//    timeline.push(conclusion);
-//      
+      
+    var platformLink = 'https://app.prolific.co/submissions/complete?cc=1E12AFFE';
+    var conclusion = {
+        type: 'html-button-response',
+        stimulus: '<p>To complete the study, copy the link below <b>and then click the FINISH button</b>.</p><p>Then paste the link in your browser to recieve your payment. Thank you!</p><p><b>'+platformLink+'</b></p><br>',
+        choices: ['<font size="+2"><b>FINISH</b></font>'],
+        on_finish: function(data){
+            data.trial = 'conclusion'
+        }
+    };
+    timeline.push(conclusion);
+      
       
       
       
@@ -1734,33 +1734,33 @@ if(pros_q ==  "pro"){
       
 // WRITE TO DATABASE
       
-//      //no redirect {uncomment last trial too}
-//        jsPsych.init({
-//            timeline: timeline, 
-//            preload_images: images,
-//            show_preload_progress_bar: false,
-//            on_finish: function() {
-////            jsPsych.data.displayData();
-//                firebase.database().ref(firebase.auth().currentUser.uid).set({
-//                    data: jsPsych.data.get().values()
-//                })
-//            }
-//        });
-      
-      //with redirect  (data writing is failing with this, redirect is working)
+      //no redirect {uncomment last trial too}
         jsPsych.init({
             timeline: timeline, 
             preload_images: images,
             show_preload_progress_bar: false,
-            on_finish: function(){
-                window.location.replace("https://app.prolific.co/submissions/complete?cc=1E12AFFE");
-            },
-            on_close: function() {
+            on_finish: function() {
+//            jsPsych.data.displayData();
                 firebase.database().ref(firebase.auth().currentUser.uid).set({
                     data: jsPsych.data.get().values()
                 })
             }
         });
+      
+//      //with redirect  (data writing is failing with this, redirect is working)
+//        jsPsych.init({
+//            timeline: timeline, 
+//            preload_images: images,
+//            show_preload_progress_bar: false,
+//            on_finish: function(){
+//                window.location.replace("https://app.prolific.co/submissions/complete?cc=1E12AFFE");
+//            },
+//            on_close: function() {
+//                firebase.database().ref(firebase.auth().currentUser.uid).set({
+//                    data: jsPsych.data.get().values()
+//                })
+//            }
+//        });
       
 
       
