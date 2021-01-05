@@ -832,7 +832,6 @@ if(pros_q ==  "pro"){
     trial_duration: function(){ return jsPsych.randomization.sampleWithoutReplacement(ITI, 1)[0]; },
         on_finish: function(data){
             data.trial = 'fixation'
-            data.trial_duration = trial_duration
         }
     };
     timeline.push(fixation);  
