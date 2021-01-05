@@ -167,10 +167,7 @@
      
 /* create timeline */
 var timeline = []; 
-      
-    
  
-      
       
 //Function to check whether consent has been given
 var check_consent = function(elem) {
@@ -1719,16 +1716,16 @@ if(pros_q ==  "pro"){
     };
     timeline.push(prolific_id);
 
-    var platformLink = 'https://app.prolific.co/submissions/complete?cc=1E12AFFE';
-    var conclusion = {
-        type: 'html-button-response',
-        stimulus: '<p>Please copy the link below <b>and click the FINISH button below</b>.</p><p>Then paste the link in your browser to recieve your payment.</p><p>Thank you.</p><p><b>' + platformLink + '</b></p>',
-        choices: ['CLICK HERE TO FINISH'],
-        on_finish: function(data){
-            data.trial = 'conclusiom'
-        }
-    };
-    timeline.push(conclusion);
+//    var platformLink = 'https://app.prolific.co/submissions/complete?cc=1E12AFFE';
+//    var conclusion = {
+//        type: 'html-button-response',
+//        stimulus: '<p>Please copy the link below <b>and click the FINISH button below</b>.</p><p>Then paste the link in your browser to recieve your payment.</p><p>Thank you.</p><p><b>' + platformLink + '</b></p>',
+//        choices: ['CLICK HERE TO FINISH'],
+//        on_finish: function(data){
+//            data.trial = 'conclusiom'
+//        }
+//    };
+//    timeline.push(conclusion);
       
       
       
@@ -1752,12 +1749,29 @@ if(pros_q ==  "pro"){
       
       
 // WRITE TO DATABASE
+      
+      //no redirect {uncomment last trial too}
         jsPsych.init({
             timeline: timeline, 
             preload_images: images,
             show_preload_progress_bar: false,
             on_finish: function() {
 //            jsPsych.data.displayData();
+                firebase.database().ref(firebase.auth().currentUser.uid).set({
+                    data: jsPsych.data.get().values()
+                })
+            }
+        });
+      
+      //with redirect
+        jsPsych.init({
+            timeline: timeline, 
+            preload_images: images,
+            show_preload_progress_bar: false,
+            on_finish: function(){
+                window.location.replace("https://app.prolific.co/submissions/complete?cc=1E12AFFE");
+            },
+            on_close: function() {
                 firebase.database().ref(firebase.auth().currentUser.uid).set({
                     data: jsPsych.data.get().values()
                 })
