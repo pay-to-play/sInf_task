@@ -1703,10 +1703,9 @@ if(pros_q ==  "pro"){
     timeline.push(prolific_id);
 
       
-    var platformLink = 'https://app.prolific.co/submissions/complete?cc=1E12AFFE';
     var conclusion = {
         type: 'html-button-response',
-        stimulus: '<p>To complete the study, copy the link below <b>and then click the SUBMIT button</b>.</p><p>Then paste the link in your browser to recieve your payment. Thank you!</p><p><b>'+platformLink+'</b></p><br>',
+        stimulus: '<p>To complete the study and receive your payment, please click the SUBMIT button. Thank you!</p><br>',
         choices: ['<font size="+2"><b>SUBMIT</b></font>'],
         on_finish: function(data){
             data.trial = 'conclusion'
