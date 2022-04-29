@@ -1737,17 +1737,17 @@ if(pros_q ==  "pro"){
 // WRITE TO DATABASE
       
       //no redirect {uncomment last trial too}
-        jsPsych.init({
-            timeline: timeline, 
-            preload_images: images,
-            show_preload_progress_bar: false,
-            on_finish: function() {
-//            jsPsych.data.displayData();
-                firebase.database().ref(firebase.auth().currentUser.uid).set({
-                    data: jsPsych.data.get().values()
-                })
-            }
-        });
+          jsPsych.init({
+              timeline: timeline,
+              preload_images: images,
+              show_preload_progress_bar: false,
+              on_finish: function() {
+                  firebase.database().ref(firebase.auth().currentUser.uid).set({
+                      data: jsPsych.data.get().values()}).then(function() {
+                      window.location.replace("https://app.prolific.co/submissions/complete?cc=1E12AFFE")
+                  });
+              },
+          });
       
 //      //with redirect  (data writing is failing with this, redirect is working)
 //        jsPsych.init({
